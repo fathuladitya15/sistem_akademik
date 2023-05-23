@@ -26,6 +26,7 @@ Route::middleware('revalidate')->group(function (){
 
 	Route::middleware('role:admin')->group(function ()	{
 		Route::get('/pengaturan',[PengaturanController::class,'index'])->name('pengaturan');
+		Route::post('/pengaturan/update/profile',[PengaturanController::class,'update_profile_sekolah'])->name('update.profile.sekolah');
 
 		Route::get('/user-management/list',[UserManagementController::class,'User_list'])->name("user.list");
 	});

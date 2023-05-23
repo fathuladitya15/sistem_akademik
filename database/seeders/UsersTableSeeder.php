@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
 			'email' 	=> 'muhamadfathuladitya15@gmail.com',
 			'username' 	=> 'admin',
 			'status_akun' => 1,
+			'role'		=> 'admin',
 			'password'  => Hash::make("password"),  
 		]);
     }
