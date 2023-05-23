@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\UserManagementController;
 
 
 // Auth Controller
@@ -21,6 +23,12 @@ Route::get('/', function () {
 // Auth::routes();
 Route::middleware('revalidate')->group(function (){
 	Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+	Route::middleware('role:admin')->group(function ()	{
+		Route::get('/pengaturan',[PengaturanController::class,'index'])->name('pengaturan');
+
+		Route::get('/user-management/list',[UserManagementController::class,'User_list'])->name("user.list");
+	});
 });
 
 
