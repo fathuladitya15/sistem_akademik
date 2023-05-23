@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Moldels\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth; 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -42,12 +47,7 @@ class LoginController extends Controller
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
             }
-            $user = User::where('username', $request->username)->first();
-            if ($user) {
-                $user->is_login_from_admin = FALSE;
-                $user->login_admin_id = NULL;
-                $user->save();
-            }
+
             return $this->sendLoginResponse($request);
         }
 

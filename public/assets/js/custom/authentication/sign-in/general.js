@@ -7,20 +7,17 @@ var KTSigninGeneral = function() {
             e = document.querySelector("#kt_sign_in_submit"),
             i = FormValidation.formValidation(t, {
                 fields: {
-                    email: {
+                    username: {
                         validators: {
                             notEmpty: {
-                                message: "Email address is required"
-                            },
-                            emailAddress: {
-                                message: "The value is not a valid email address"
+                                message: "username wajib diisi"
                             }
                         }
                     },
                     password: {
                         validators: {
                             notEmpty: {
-                                message: "The password is required"
+                                message: "Password wajib diisi"
                             }
                         }
                     }
@@ -38,27 +35,55 @@ var KTSigninGeneral = function() {
                     "Valid" == i ? (e.setAttribute("data-kt-indicator", "on"),
                     e.disabled = !0,
                     setTimeout((function() {
-                        e.removeAttribute("data-kt-indicator"),
-                        e.disabled = !1,
-                        Swal.fire({
-                            text: "You have successfully logged in!",
-                            icon: "success",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then((function(e) {
-                            e.isConfirmed && (t.querySelector('[name="email"]').value = "",
-                            t.querySelector('[name="password"]').value = "")
-                        }
-                        ))
+						$.ajax({
+							url: url_login,
+							data: $('#kt_sign_in_form').serialize(),
+							type: "POST",
+							success: function (res) {
+								if (res.sukses == true) {
+									e.removeAttribute("data-kt-indicator");
+									e.disabled = !1;
+									Swal.fire({
+										title: 'Login Berhasil !',
+										icon:'success',
+									  	html: 'Melanjutkan Ke Dashboard',
+									  	timer: 2000,
+									  	timerProgressBar: true,
+									  	didOpen: () => {
+										  Swal.showLoading()
+									  	},
+									}).then((result) => {
+										window.location.href = "/home";
+									})
+								} else {
+									Swal.fire({
+									text: "Opps , Terjadi Kesalahan, Hubungi Tim IT !",
+									icon: "error",
+									buttonsStyling: !1,
+									confirmButtonText: "Ok, Mengerti!",
+									customClass: {
+										confirmButton: "btn btn-primary"
+									}
+								})
+								}
+							}, error: function (er) {
+								Swal.fire({
+									text: "Opps , Terjadi Kesalahan, Hubungi Tim IT !",
+									icon: "error",
+									buttonsStyling: !1,
+									confirmButtonText: "Ok, Mengerti!",
+									customClass: {
+										confirmButton: "btn btn-primary"
+									}
+								})
+							}
+						})
                     }
                     ), 2e3)) : Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "Opps , Terjadi Kesalahan, Mohon coba kembali !",
                         icon: "error",
                         buttonsStyling: !1,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok, Mengerti!",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }

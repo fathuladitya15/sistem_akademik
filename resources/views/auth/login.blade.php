@@ -48,10 +48,11 @@
                         </a>
                         <!--end::Logo-->
                         <!--begin::Title-->
-                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">Welcome to Metronic</h1>
+                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">Selamat Datang di Sistem
+                            Informasi Akademik</h1>
                         <!--end::Title-->
                         <!--begin::Description-->
-                        <p class="fw-bold fs-2" style="color: #986923;">Discover Amazing Metronic
+                        <p class="fw-bold fs-2" style="color: #986923;">Discover Amazing System
                             <br />with great build tools
                         </p>
                         <!--end::Description-->
@@ -59,7 +60,7 @@
                     <!--end::Content-->
                     <!--begin::Illustration-->
                     <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
-                        style="background-image: url(assets/media/illustrations/sketchy-1/13.png"></div>
+                        style="background-image: url({{ asset('assets/media/illustrations/sketchy-1/13.png') }})"></div>
                     <!--end::Illustration-->
                 </div>
                 <!--end::Wrapper-->
@@ -73,26 +74,27 @@
                     <div class="w-lg-500px p-10 p-lg-15 mx-auto">
                         <!--begin::Form-->
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="#">
+							@csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-10">
                                 <!--begin::Title-->
-                                <h1 class="text-dark mb-3">Sign In to Metronic</h1>
+                                <h1 class="text-dark mb-3">Login Siakad</h1>
                                 <!--end::Title-->
                                 <!--begin::Link-->
-                                <div class="text-gray-400 fw-bold fs-4">New Here?
+                                {{-- <div class="text-gray-400 fw-bold fs-4">New Here?
                                     <a href="" class="link-primary fw-bolder">Create an Account</a>
-                                </div>
+                                </div> --}}
                                 <!--end::Link-->
                             </div>
                             <!--begin::Heading-->
                             <!--begin::Input group-->
                             <div class="fv-row mb-10">
                                 <!--begin::Label-->
-                                <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+                                <label class="form-label fs-6 fw-bolder text-dark">Username</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input class="form-control form-control-lg form-control-solid" type="text"
-                                    name="email" autocomplete="off" />
+                                    name="username" autocomplete="off" />
                                 <!--end::Input-->
                             </div>
                             <!--end::Input group-->
@@ -151,6 +153,7 @@
     <!--end::Main-->
     <script>
         var hostUrl = "assets/";
+		var url_login = "{{ route('login.post') }}";
     </script>
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->

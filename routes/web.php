@@ -24,7 +24,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::get('/login',[LoginController::class,'showLoginForm'])->name('login');
-Route::post('/login',[LoginController::class,'login'])->name('login');
+Route::post('/login',[LoginController::class,'login'])->name('login.post');
 
 Route::get('/register',[RegisterController::class,'index'])->name('register');
 Route::post('/register',[RegisterController::class,'submit'])->name('register');
@@ -36,3 +36,5 @@ Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail
 Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+
+Route::post('/logout', [LoginController::class,'logout'])->name('logout');

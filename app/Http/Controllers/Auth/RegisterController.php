@@ -70,4 +70,36 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    public function index()
+    {
+        return view('auth.register');
+    }
+
+	public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
+    }
+
+	protected function guard()
+    {
+        return Auth::guard();
+    }
+
+	protected function registered(Request $request, $user)
+    {
+        //
+    }
 }
