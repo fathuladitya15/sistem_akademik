@@ -200,7 +200,7 @@
                                 data-kt-menu="true">
                                 <!--begin::Heading-->
                                 <div class="d-flex flex-column bgi-no-repeat rounded-top"
-                                    style="background-image:url('assets/media/misc/pattern-1.jpg')">
+                                    style="background-image:url({{ asset('assets/media/misc/pattern-1.jpg') }})">
                                     <!--begin::Title-->
                                     <h3 class="text-white fw-bold px-9 mt-10 mb-6">Notifications
                                         <span class="fs-8 opacity-75 ps-3">24 reports</span>
@@ -574,7 +574,7 @@
                                             <!--begin::Illustration-->
                                             <div class="text-center px-4">
                                                 <img class="mw-100 mh-200px" alt="image"
-                                                    src="assets/media/illustrations/sketchy-1/1.png" />
+                                                    src="{{ asset('assets/media/illustrations/sketchy-1/1.png') }} " />
                                             </div>
                                             <!--end::Illustration-->
                                         </div>
@@ -888,7 +888,7 @@
                                 data-kt-menu="true">
                                 <!--begin::Heading-->
                                 <div class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10"
-                                    style="background-image:url('assets/media/misc/pattern-1.jpg')">
+                                    style="background-image:url({{ asset('assets/media/misc/pattern-1.jpg') }})">
                                     <!--begin::Title-->
                                     <h3 class="text-white fw-bold mb-3">Quick Links</h3>
                                     <!--end::Title-->

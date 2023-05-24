@@ -29,6 +29,7 @@ Route::middleware('revalidate')->group(function (){
 		Route::post('/pengaturan/update/profile',[PengaturanController::class,'update_profile_sekolah'])->name('update.profile.sekolah');
 
 		Route::get('/user-management/list',[UserManagementController::class,'User_list'])->name("user.list");
+		Route::get('/user-management/list/data',[UserManagementController::class,'json_user_list'])->name("user.list.ajax");
 	});
 });
 

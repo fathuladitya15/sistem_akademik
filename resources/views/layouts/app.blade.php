@@ -4,7 +4,7 @@
 
 <head>
     <base href="">
-    <title> {{ $pageTitle }}</title>
+    <title> {{ $pageTitle }} - Sistem Akademik</title>
     <meta name="description"
         content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
     <meta name="keywords"
@@ -93,8 +93,8 @@
 
 
     <!--Data Togle dan Modalds -->
-    @include('layouts.partial.toogle')
-    @include('layouts.partial.modals')
+    {{-- @include('layouts.partial.toogle') --}}
+    {{-- @include('layouts.partial.modals') --}}
     <!--End :: Data Togle dan Modalds -->
 
     <!--begin::Scrolltop-->
@@ -114,7 +114,7 @@
     <!--end::Scrolltop-->
     <!--end::Main-->
     <script>
-        var hostUrl = "assets/";
+        var hostUrl = "{{ asset('/') }}";
     </script>
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
