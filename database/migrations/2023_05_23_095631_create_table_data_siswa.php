@@ -6,20 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('table_data_siswa', function (Blueprint $table) {
             $table->id();
 			$table->integer('user_id');
 			$table->integer('nis');
+			$table->string('jenis_kelamin');
 			$table->string('tempat_lahir');
 			$table->date('tanggal_lahir');
 			$table->text('alamat');
 			$table->integer('nomer_telepon');
-			$table->string('hobby');
+			$table->text('hobby');
             $table->timestamps();
         });
     }

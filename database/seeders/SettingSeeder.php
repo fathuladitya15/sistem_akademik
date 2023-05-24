@@ -21,7 +21,7 @@ class SettingSeeder extends Seeder
 
 		$arr  = array(
 			array('name' => 'nama_aplikasi','value' => 'Sistem Informasi Akademik' ),
-			array('name' => 'logo_aplikasi','value' => 'image/assets/media/logos/logo-1-dark.svg' ),
+			array('name' => 'logo_aplikasi','value' => 'assets/media/logos/logo-1-dark.svg' ),
 			array('name' => 'nama_sekolah','value' => 'SMK PANDU JAYA 0' ),
 			array('name' => 'nomer_telepon_sekolah','value' => '021 889 225' ),
 			array('name' => 'email_sekolah','value' => 'sekolahkita@gmail.com' ),
