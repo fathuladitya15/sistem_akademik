@@ -7,6 +7,7 @@ use App\Models\User;
 use Cabon\Carbon;
 use DataTables;
 use Str;
+use Auth;
 class UserManagementController extends Controller
 {
 
@@ -74,8 +75,11 @@ class UserManagementController extends Controller
 			return $html;
 		})
 		->addColumn('action', function ($table) {
-			// $param = ;
-				return '	<a href="javascript:void(0)" class="btn btn-light btn-active-light-primary btn-sm cus-trigger"  aria-expanded="false">Actions
+				if (Auth::id() == $table->id) {
+					return '';
+				}else {
+					
+				return '<a href="javascript:void(0)" class="btn btn-light btn-active-light-primary btn-sm"  data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <span class="svg-icon svg-icon-5 m-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
@@ -93,10 +97,11 @@ class UserManagementController extends Controller
                                     <a href="javascript:void(0)" class="menu-link px-3"  onclick="return delete_row(this)" data-name="'.$table->name.'" data-id="'.$table->id.'">Delete</a>
                                 </div>
                             </div>';
+				}
 		})
 		->rawColumns(['name','action']);
 
-	return $table->make(true);
-}
+		return $table->make(true);
+	}
 }
 

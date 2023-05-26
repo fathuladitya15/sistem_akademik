@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered; 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+
 
 class RegisterController extends Controller
 {
@@ -22,7 +26,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    // use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -41,19 +45,22 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+		$valid = Validator::make($data, [
+            'first-name' => 'required|string|max:255',
+            'last-name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|required_with:password-confirm|same:password-confirmation',
+			'password-confirm' => 'required|string|min:8',
         ]);
+		if ($valid->fails()) {
+			$response = ['sukses' => FALSE ,'pesan' => $valid->errors()];
+		}
+		$response = ['sukses' => TRUE ,'pesan' =>'berhasil'];
+			
+		return $response; 
     }
 
     /**
@@ -65,9 +72,11 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'name' => $data['fisrt_name'].' '.$data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+			'status_akun' => 0,
+			'role' => 'siswa',
         ]);
     }
 
@@ -78,19 +87,39 @@ class RegisterController extends Controller
 
 	public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
+		// $validator = $this->validator($request->all());
+		$customMessages = [
+        	'required' => ' :attribute wajib diisi.',
+			'unique' => ':attribute Telah digunakan',
+			// 'regex' => 'Password harus menggunakan kombinasi huruf, angka & simbol.',
+			'password.min' => 'Password minimal 8 karakter atau lebih',
+			'toc.accepted' => 'Centang Syarat dan ketentuan',
+    	];
+		$valid  = $request->validate([
+            'first-name' 		=> 'required|string|max:255',
+            'last-name' 		=> 'required|string|max:255',
+            'email' 			=> 'required|string|email|max:255|unique:users,email',
+            'password'			=> 'required|string|same:password-confirm|min:8',
+			'password-confirm'  => 'required',
+			'toc'				=> 'accepted',
+        ],$customMessages);
+		if (!$valid) {
+			$response = ['sukses' => FALSE ,'pesan' => $valid->errors()];
+		}else {
+			$response = ['sukses' => TRUE ,'pesan' =>'berhasil'];
+		}
+		return response()->json($response);
+		// return $request->wantsJson() ? new JsonResponse([], 201) : new JsonResponse($response, 201);
+		
 
-        event(new Registered($user = $this->create($request->all())));
+        // event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);
 
-        if ($response = $this->registered($request, $user)) {
-            return $response;
-        }
+        // if ($response = $this->registered($request, $user)) {
+        //     return $response;
+        // }
 
-        return $request->wantsJson()
-                    ? new JsonResponse([], 201)
-                    : redirect($this->redirectPath());
     }
 
 	protected function guard()

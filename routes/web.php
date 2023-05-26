@@ -38,7 +38,7 @@ Route::get('/login',[LoginController::class,'showLoginForm'])->name('login');
 Route::post('/login',[LoginController::class,'login'])->name('login.post');
 
 Route::get('/register',[RegisterController::class,'index'])->name('register');
-Route::post('/register',[RegisterController::class,'submit'])->name('register');
+Route::post('/register',[RegisterController::class,'register'])->name('register.post');
 
 Route::get('/password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
 Route::post('/password/confirm', 'Auth\ConfirmPasswordController@confirm')->name('password.confirm');

@@ -617,38 +617,6 @@
         $('.searching').keyup(function() {
             table.draw();
         })
-
-        document.querySelectorAll(".cus-trigger").addEventListener("click", event)
-
-        // 	document.querySelectorAll(".dropdown-trigger").forEach(triggerEl => {
-        // 	let toggleTimeout;
-        // 	const controlledEl = document.getElementById(
-        // 	  triggerEl.getAttribute("aria-controls")
-        // 	);
-        // 	//set height of dropdown section, so we can animate it in css
-        // 	const height = controlledEl.firstElementChild.offsetHeight;
-        // 	controlledEl.style.height = `${height}px`;
-
-        // 	// prevent focus
-        // 	triggerEl.addEventListener("mousedown", event => {
-        // 	  event.preventDefault();
-        // 	});
-
-        // 	// toggle view on click
-        // 	triggerEl.addEventListener("click", event => {
-        // 	  window.clearTimeout(toggleTimeout);
-        // 	  if (triggerEl.getAttribute("aria-expanded") === "false") {
-        // 		controlledEl.classList.remove("closed", "hide");
-        // 		triggerEl.setAttribute("aria-expanded", true);
-        // 	  } else {
-        // 		controlledEl.classList.add("closed");
-        // 		triggerEl.setAttribute("aria-expanded", false);
-        // 		toggleTimeout = window.setTimeout(() => {
-        // 		  controlledEl.classList.add("hide");
-        // 		}, 300);
-        // 	  }
-        // 	});
-        //   });
     </script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/table.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/export-users.js') }}"></script>
