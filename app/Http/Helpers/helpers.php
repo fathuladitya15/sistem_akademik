@@ -43,4 +43,18 @@ if (!function_exists('menuShow')) {
 	}
 }
 
+if (!function_exists('regex')) {
+	function regex($pass)
+	{
+		$re = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/';
+		$match = preg_match($re,$pass);
+		if ($match) {
+			return TRUE;
+		}else {
+			return FALSE;
+		}
+		// return $res;
+	}
+}
+
 ?>

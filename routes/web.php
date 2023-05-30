@@ -22,6 +22,9 @@ Route::get('/', function () {
 
 // Auth::routes();
 Route::middleware('revalidate')->group(function (){
+	Route::get('/verifikasi',[VerificationController::class,'show'])->name('verification.notice');
+	Route::post('/verifikasi/resend',[VerificationController::class,'resend'])->name('verification.resend');
+	Route::post('/verifikasi/verify',[VerificationController::class,'resend'])->name('verification.verify');
 	Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 	Route::middleware('role:admin')->group(function ()	{

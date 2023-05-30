@@ -69,12 +69,12 @@
                                 <div class="col-xl-6">
                                     <label class="form-label fw-bolder text-dark fs-6">Nama Depan</label>
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        placeholder="" name="first-name" autocomplete="off" />
+                                        placeholder="" name="first_name" autocomplete="off" />
                                 </div>
                                 <div class="col-xl-6">
                                     <label class="form-label fw-bolder text-dark fs-6">Nama Belakang</label>
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        placeholder="" name="last-name" autocomplete="off" />
+                                        placeholder="" name="last_name" autocomplete="off" />
                                 </div>
                             </div>
                             <div class="fv-row mb-7">

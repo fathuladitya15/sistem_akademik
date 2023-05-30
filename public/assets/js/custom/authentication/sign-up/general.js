@@ -110,7 +110,7 @@ var KTSignupGeneral = function () {
 													console.log(res);
 												})
 											} else {
-												// console.log(res)
+												console.log(res)
 												Swal.fire({
 													text: res.er,
 													icon: "error",
