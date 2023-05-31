@@ -56,8 +56,8 @@
                                 <!--end::Icon-->
                                 <!--begin::Label-->
                                 <div class="stepper-label">
-                                    <h3 class="stepper-title">Account Type</h3>
-                                    <div class="stepper-desc fw-bold">Setup Your Account Details</div>
+                                    <h3 class="stepper-title">Biaya Registrasi</h3>
+                                    <div class="stepper-desc fw-bold">Verifikasi Pembayaran Registrasi</div>
                                 </div>
                                 <!--end::Label-->
                             </div>
