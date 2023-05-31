@@ -24,7 +24,7 @@ Route::get('/', function () {
 Route::middleware('revalidate')->group(function (){
 	Route::get('/verifikasi',[VerificationController::class,'show'])->name('verification.notice');
 	Route::post('/verifikasi/resend',[VerificationController::class,'resend'])->name('verification.resend');
-	Route::post('/verifikasi/verify',[VerificationController::class,'resend'])->name('verification.verify');
+	Route::get('/verifikasi/verify',[VerificationController::class,'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
 	Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 	Route::middleware('role:admin')->group(function ()	{

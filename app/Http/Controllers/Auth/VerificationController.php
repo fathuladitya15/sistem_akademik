@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Events\Verified;
@@ -52,20 +53,24 @@ class VerificationController extends Controller
                         ? redirect($this->redirectPath())
                         : view('auth.verify',compact('pageTitle','SubPageTitle'));
     }
-	    public function verify(Request $request)
+	public function verify(Request $request)
     {
         if (! hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
-            throw new AuthorizationException;
+			$verif = FALSE;
+            // Session::set('status',FALSE);
         }
 
         if (! hash_equals((string) $request->route('hash'), sha1($request->user()->getEmailForVerification()))) {
-            throw new AuthorizationException;
+            // Session::set('status',FALSE);
+			$verif = FALSE;
+			// throw new AuthorizationException;
         }
 
         if ($request->user()->hasVerifiedEmail()) {
+			$verif = TRUE;
             return $request->wantsJson()
                         ? new JsonResponse([], 204)
-                        : redirect($this->redirectPath());
+                        : view('auth.verified',compact('verif'));
         }
 
         if ($request->user()->markEmailAsVerified()) {
@@ -78,7 +83,7 @@ class VerificationController extends Controller
 
         return $request->wantsJson()
                     ? new JsonResponse([], 204)
-                    : redirect($this->redirectPath())->with('verified', true);
+                    : redirect(route('home'))->with('verified', true);
     }
 
     protected function verified(Request $request)
