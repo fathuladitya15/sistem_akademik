@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Str;
 use App\Models\User;
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -37,8 +38,9 @@ class RegisterController extends Controller
 			'toc.accepted' => 'Centang Syarat dan ketentuan',
     	];
 		$valid  = $request->validate([
-            'first_name' 		=> 'required|string|max:255',
-            'last_name' 		=> 'required|string|max:255',
+            'pertama' 		=> 'required|string|max:255',
+            'terakhir' 		=> 'required|string|max:255',
+            'username' 		=> 'required|string|max:255|unique:users,username|regex:/^\S*$/u',
             'email' 			=> 'required|string|email|max:255|unique:users,email',
             'password'			=> 'required|string|same:password-confirm|min:8',
 			'password-confirm'  => 'required',
@@ -56,14 +58,22 @@ class RegisterController extends Controller
     protected function create($data)
     {
 		// $username = 'SW'.$data->
-        return User::create([
-            'name' => $data->first_name.' '.$data->last_name,
-            'username' => Str::lower($data->last_name),
-            'email' => $data->email,
-            'password' => Hash::make($data->password),
-			'status_akun' => 0,
-			'role' => 'siswa',
-        ]);
+        $user =  User::create([
+					'name' => $data->pertama.' '.$data->terakhir,
+					'username' => $data->username,
+					'email' => $data->email,
+					'password' => Hash::make($data->password),
+					'status_akun' => 0,
+					'role' => 'siswa',
+        		]);
+		$invoice = Pembayaran::create([
+			'user_id' => $user['id'],
+			'kode_pembayaran' => $user['id'].mt_rand(1000000000,9999999999),
+			'nominal_pembayaran' => 100000,
+			'status_pembayaran' => 0,
+			'detail_pembayaran' => 'Biaya Formulir Pendaftaran',
+		]);
+		return TRUE;
     }
 
     public function index()
@@ -73,33 +83,33 @@ class RegisterController extends Controller
 
 	public function register(Request $request)
     {
-		
-		return response()->json($this->validator($request));
+		return $this->validator($request);
 		// $customMessages = [
-        // 	'required' => ' :attribute wajib diisi.',
-		// 	'unique' => ':attribute Telah digunakan',
-		// 	'password.min' => 'Password minimal 8 karakter atau lebih',
-		// 	'toc.accepted' => 'Centang Syarat dan ketentuan',
+        // 	'required' 		=> ':attribute wajib diisi.',
+		// 	'unique' 		=> ':attribute Telah digunakan',
+		// 	'password.min'	=> 'Password minimal 8 karakter atau lebih',
+		// 	'toc.accepted' 	=> 'Centang Syarat dan ketentuan',
     	// ];
 		// $valid  = $request->validate([
-        //     'first-name' 		=> 'required|string|max:255',
-        //     'last-name' 		=> 'required|string|max:255',
+        //     'pertama' 			=> 'required|string|max:255',
+        //     'terakhir' 			=> 'required|string|max:255',
         //     'email' 			=> 'required|string|email|max:255|unique:users,email',
         //     'password'			=> 'required|string|same:password-confirm|min:8',
 		// 	'password-confirm'  => 'required',
 		// 	'toc'				=> 'accepted',
         // ],$customMessages);
-		// 	$cek_pass = regex($request->password);
+		// $cek_pass = regex($request->password);
 		// if ($cek_pass == FALSE ) {
 		// 	$response =  ['sukses' => FALSE,'pesan' => 'Minimal 8 Karakter atau lebih dengan huruf, numbers & simbol.'];
+		// 	if (!$valid) {
+		// 		$response = ['sukses' => FALSE ,'pesan' => $valid->errors()];
+		// 	}else {
+				
+		// 		$response = ['sukses' => TRUE ,'pesan' =>'berhasil'];
+		// 	}
 		// }
-		// if (!$valid) {
-		// 	$response = ['sukses' => FALSE ,'pesan' => $valid->errors()];
-		// }else {
-        	
-		// 	$response = ['sukses' => TRUE ,'pesan' =>'berhasil'];
-		// }
-		// return $request->wantsJson() ? new JsonResponse([], 201) : new JsonResponse($response, 201);
+		// // return $request->wantsJson() ? new JsonResponse([], 201) : new JsonResponse($response, 200);
+		// return response()->json($request->all())
 		
 
     }

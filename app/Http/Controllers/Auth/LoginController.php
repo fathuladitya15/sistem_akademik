@@ -125,4 +125,12 @@ class LoginController extends Controller
     {
         return Auth::guard();
     }
+	
+	protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            // $this->username() => [trans('auth.failed')],
+            $this->username() => ['sukses' => FALSE ,'pesan' => 'Username atau Password anda Tidak Sesuai !'],
+        ]);
+    }
 }

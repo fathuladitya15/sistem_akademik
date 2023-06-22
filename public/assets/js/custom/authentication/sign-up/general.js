@@ -10,17 +10,24 @@ var KTSignupGeneral = function () {
 				s = KTPasswordMeter.getInstance(e.querySelector('[data-kt-password-meter="true"]')),
 				a = FormValidation.formValidation(e, {
 					fields: {
-						"first-name": {
+						pertama: {
 							validators: {
 								notEmpty: {
 									message: "Nama Depan diperlukan"
 								}
 							}
 						},
-						"last-name": {
+						terakhir: {
 							validators: {
 								notEmpty: {
 									message: "Nama Belakang diperlukan"
+								}
+							}
+						},
+						username: {
+							validators: {
+								notEmpty: {
+									message: "Username Wajib diisi"
 								}
 							}
 						},
@@ -106,8 +113,8 @@ var KTSignupGeneral = function () {
 														Swal.showLoading()
 													},
 												}).then((result) => {
-													// window.location.href = "/home";
-													console.log(res);
+													window.location.href = "/home";
+													// console.log(res);
 												})
 											} else {
 												console.log(res)
@@ -142,7 +149,7 @@ var KTSignupGeneral = function () {
 
 								}
 								), 1500)) : Swal.fire({
-									text: "Sorry, Form Pendaftaran Belum lengkap, cek dan coba kembali.",
+									text: "Maaf, Form Pendaftaran Belum lengkap, cek dan coba kembali.",
 									icon: "error",
 									buttonsStyling: !1,
 									confirmButtonText: "Ok, Mengerti !",

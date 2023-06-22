@@ -22,9 +22,10 @@ var KTCreateAccount = function () {
 					var t = a[e.getCurrentStepIndex() - 1];
 					t ? t.validate().then((function (t) {
 						console.log("validated!"),
-							"Valid" == t ? (e.goNext(),
-								KTUtil.scrollTop()) : Swal.fire({
-									text: "Sorry, looks like there are some errors detected, please try again.",
+							"Valid" == t ?
+								(e.goNext(), KTUtil.scrollTop()) :
+								Swal.fire({
+									text: "Selesaikan Pembayaran Anda Terlebih Dahulu.",
 									icon: "error",
 									buttonsStyling: !1,
 									confirmButtonText: "Ok, got it!",
@@ -48,27 +49,27 @@ var KTCreateAccount = function () {
 				)),
 				a.push(FormValidation.formValidation(i, {
 					fields: {
-						norek_pengirim: {
+						va: {
 							validators: {
 								notEmpty: {
-									message: "Nomer Rekening Wajib diisi"
+									message: "Pilih Virtual Account"
 								}
 							}
 						},
-						nama_pengirim: {
-							validators: {
-								notEmpty: {
-									message: "Nama Pemilik Rekening Wajib diisi"
-								}
-							}
-						},
-						bukti_pengiriman: {
-							validators: {
-								notEmpty: {
-									message: "Bukti Transfer Wajib diisi"
-								}
-							}
-						}
+						// nama_pengirim: {
+						// 	validators: {
+						// 		notEmpty: {
+						// 			message: "Nama Pemilik Rekening Wajib diisi"
+						// 		}
+						// 	}
+						// },
+						// bukti_pengiriman: {
+						// 	validators: {
+						// 		notEmpty: {
+						// 			message: "Bukti Transfer Wajib diisi"
+						// 		}
+						// 	}
+						// }
 					},
 					plugins: {
 						trigger: new FormValidation.plugins.Trigger,
@@ -232,7 +233,7 @@ var KTCreateAccount = function () {
 										r.goNext()
 								}
 								), 2e3)) : Swal.fire({
-									text: "Sorry, looks like there are some errors detected, please try again.",
+									text: "Sorry, .",
 									icon: "error",
 									buttonsStyling: !1,
 									confirmButtonText: "Ok, got it!",
@@ -245,18 +246,6 @@ var KTCreateAccount = function () {
 								))
 					}
 					))
-				}
-				)),
-				$(i.querySelector('[name="card_expiry_month"]')).on("change", (function () {
-					a[3].revalidateField("card_expiry_month")
-				}
-				)),
-				$(i.querySelector('[name="card_expiry_year"]')).on("change", (function () {
-					a[3].revalidateField("card_expiry_year")
-				}
-				)),
-				$(i.querySelector('[name="business_type"]')).on("change", (function () {
-					a[2].revalidateField("business_type")
 				}
 				))
 		}

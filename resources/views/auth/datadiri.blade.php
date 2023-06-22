@@ -4,44 +4,26 @@
 
 <head>
     <base href="../../">
-    <title>Metronic - the world's #1 selling Bootstrap Admin Theme Ecosystem for HTML, Vue, React, Angular &amp; Laravel
-        by Keenthemes</title>
-    <meta name="description"
-        content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
-    <meta name="keywords"
-        content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+    <title>Registrasi Peserta Didik Baru </title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }} " />
-    <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <!--end::Fonts-->
-    <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <!--end::Global Stylesheets Bundle-->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
-<!--end::Head-->
-<!--begin::Body-->
 
 <body id="kt_body" class="bg-body">
-    <!--begin::Main-->
     <div class="d-flex flex-column flex-root">
-        <!--begin::Authentication - Multi-steps-->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column"
             id="kt_create_account_stepper">
-            <!--begin::Aside-->
             <div class="d-flex flex-column flex-lg-row-auto w-xl-500px bg-lighten shadow-sm">
-                <!--begin::Wrapper-->
                 <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-500px scroll-y">
-                    <!--begin::Header-->
                     <div class="d-flex flex-row-fluid flex-column flex-center p-10 pt-lg-20">
-                        <!--begin::Logo-->
                         <a href="#" class="mb-10 mb-lg-20">
                             <img alt="Logo" src="{{ asset('assets/media/logos/logo-1.svg') }}" class="h-40px" />
                         </a>
-                        <!--end::Logo-->
-                        <!--begin::Nav-->
                         <div class="stepper-nav">
                             <!--begin::Step 1-->
                             <div class="stepper-item current" data-kt-stepper-element="nav">
@@ -141,13 +123,9 @@
                         </div>
                         <!--end::Nav-->
                     </div>
-                    <!--end::Header-->
-                    <!--begin::Illustration-->
                     <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-150px min-h-lg-300px"
                         style="background-image: url({{ asset('assets/media/illustrations/sketchy-1/16.png') }}"></div>
-                    <!--end::Illustration-->
                 </div>
-                <!--end::Wrapper-->
             </div>
             <!--begin::Aside-->
             <!--begin::Body-->
@@ -161,7 +139,7 @@
                             <!--begin::Step 1-->
                             <div class="current" data-kt-stepper-element="content">
                                 <!--begin::Wrapper-->
-                                <div class="w-100">
+                                <div class="w-100" id="">
                                     <!--begin::Heading-->
                                     <div class="pb-10 pb-lg-15">
                                         <!--begin::Title-->
@@ -179,34 +157,46 @@
                                         <!--end::Notice-->
                                     </div>
                                     <div class="mb-10 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="form-label mb-3">Nomer Rekening</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-lg form-control-solid"
-                                            name="norek_pengirim" placeholder="" value="" />
-                                        <!--end::Input-->
+                                        <label class="form-label mb-3">Metode Pembayaran</label>
+                                        <select name="va" id="va"
+                                            class="form-control form-control-lg form-control-solid">
+                                            <option value="">- Pilih Metode Virtual Account </option>
+                                            @foreach ($va as $item)
+                                                <option value="{{ $item['code'] }}"
+                                                    {{ $item['is_activated'] != true ? 'disabled' : '' }}>
+                                                    {{ $item['name'] }}
+                                                    {{ $item['is_activated'] != true ? '( Dalam Perbaikan )' : '' }}
+                                                </option>
+                                            @endforeach
+                                            <option value=""></option>
+                                        </select>
                                     </div>
                                     <div class="mb-10 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="form-label mb-3">Nama Pengirim</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-lg form-control-solid"
-                                            name="nama_pengirim" placeholder="" value="" />
-                                        <!--end::Input-->
+                                        <div class="card" style="background-color: white; display:none"
+                                            id="card-pembayaran">
+                                            <div class="card-body">
+                                                <h2>Virtual Account</h2>
+                                                {{-- <img src="{{ asset('assets/media/logos/Banks/Mandiri.png') }}"
+                                                    alt="" id="logo_banks" width="150" height="90"> --}}
+                                                <h3 id="banks"></h3>
+                                                <br>
+                                                <h1 class="text-center" id="code_virtual"></h1>
+                                                <br />
+                                                <button type="button" id="proses_pembayaran"
+                                                    class="btn btn-lg btn-light-success me-3" style="float: right;">
+                                                    Proses Pembayaran
+                                                </button>
+                                            </div>
+                                            <div class="card-footer">
+                                                <h3>Tata Cara Pembayaran</h3>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="mb-10 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="form-label mb-3">Bukti Transaksi</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <input type="file" class="form-control form-control-lg form-control-solid"
-                                            name="bukti_pengiriman" placeholder="" value="" />
-                                        <!--end::Input-->
-                                    </div>
+                                    <input type="hidden" id="external_id" name="external_id">
+                                    <input type="hidden" id="bank_code" name="bank_code">
                                     <!--end::Heading-->
                                 </div>
+
                                 <!--end::Wrapper-->
                             </div>
                             <!--end::Step 1-->
@@ -879,6 +869,13 @@
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Custom Javascript(used by this page)-->
+    <script>
+        url_cek_pembayaran = "{{ route('Xendit.AuthPayment') }}";
+        url_generate = "{{ route('Xendit.generateVA') }}";
+        asset = "{{ asset('assets/media/logos/Banks/') }}";
+        status_pembayaran = "{{ $status_pembayaran }}";
+    </script>
+    <script src="{{ asset('assets/js/payments.js') }}"></script>
     <script src="{{ asset('assets/js/custom/modals/create-account.js') }}"></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->

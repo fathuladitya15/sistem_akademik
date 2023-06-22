@@ -31,6 +31,7 @@ var KTSigninGeneral = function () {
 				}),
 				e.addEventListener("click", (function (n) {
 					n.preventDefault(),
+
 						i.validate().then((function (i) {
 							"Valid" == i ? (e.setAttribute("data-kt-indicator", "on"),
 								e.disabled = !0,
@@ -56,8 +57,10 @@ var KTSigninGeneral = function () {
 													window.location.href = "/home";
 												})
 											} else {
+												e.removeAttribute("data-kt-indicator");
+												e.disabled = !1;
 												Swal.fire({
-													text: "Opps , Terjadi Kesalahan, Hubungi Tim IT !",
+													text: "Opps , Username Atau Password Tidak Sesuai !",
 													icon: "error",
 													buttonsStyling: !1,
 													confirmButtonText: "Ok, Mengerti!",
@@ -67,8 +70,11 @@ var KTSigninGeneral = function () {
 												})
 											}
 										}, error: function (er) {
+											e.removeAttribute("data-kt-indicator");
+											e.disabled = !1;
+											var pesan = er.responseJSON.errors.username[1];
 											Swal.fire({
-												text: "Opps , Terjadi Kesalahan, Hubungi Tim IT !",
+												text: pesan,
 												icon: "error",
 												buttonsStyling: !1,
 												confirmButtonText: "Ok, Mengerti!",
@@ -79,7 +85,8 @@ var KTSigninGeneral = function () {
 										}
 									})
 								}
-								), 2e3)) : Swal.fire({
+								), 2e3)) :
+								Swal.fire({
 									text: "Opps , Terjadi Kesalahan, Mohon coba kembali !",
 									icon: "error",
 									buttonsStyling: !1,
@@ -87,6 +94,7 @@ var KTSigninGeneral = function () {
 									customClass: {
 										confirmButton: "btn btn-primary"
 									}
+
 								})
 						}
 						))

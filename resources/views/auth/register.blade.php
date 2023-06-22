@@ -1,35 +1,21 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<!--begin::Head-->
 
 <head>
     <base href="">
     <title>Pendaftaran Peserta Didik Baru</title>
-    <meta name="description"
-        content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
-    <meta name="keywords"
-        content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
-    <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <!--end::Fonts-->
-    <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <!--end::Global Stylesheets Bundle-->
 </head>
-<!--end::Head-->
-<!--begin::Body-->
 
 <body id="kt_body" class="bg-body">
-    <!--begin::Main-->
     <div class="d-flex flex-column flex-root">
-        <!--begin::Authentication - Sign-up -->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
-            <!--begin::Aside-->
             <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative"
                 style="background-color: #F2C98A">
                 <!--begin::Wrapper-->
@@ -69,13 +55,18 @@
                                 <div class="col-xl-6">
                                     <label class="form-label fw-bolder text-dark fs-6">Nama Depan</label>
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        placeholder="" name="first_name" autocomplete="off" />
+                                        placeholder="" name="pertama" autocomplete="off" />
                                 </div>
                                 <div class="col-xl-6">
                                     <label class="form-label fw-bolder text-dark fs-6">Nama Belakang</label>
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        placeholder="" name="last_name" autocomplete="off" />
+                                        placeholder="" name="terakhir" autocomplete="off" />
                                 </div>
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label class="form-label fw-bolder text-dark fs-6">Username</label>
+                                <input class="form-control form-control-lg form-control-solid" type="text"
+                                    placeholder="" name="username" autocomplete="off" />
                             </div>
                             <div class="fv-row mb-7">
                                 <label class="form-label fw-bolder text-dark fs-6">Email</label>
@@ -117,8 +108,10 @@
                             <div class="fv-row mb-10">
                                 <label class="form-check form-check-custom form-check-solid form-check-inline">
                                     <input class="form-check-input" type="checkbox" name="toc" value="1" />
-                                    <span class="form-check-label fw-bold text-gray-700 fs-6">I Agree
-                                        <a href="#" class="ms-1 link-primary">Terms and conditions</a>.</span>
+                                    <span class="form-check-label fw-bold text-gray-700 fs-6">Saya Setuju
+                                        <a href="javascript:void(0)" onclick="modal_syarat()"
+                                            class="ms-1 link-primary">Syarat dan
+                                            Ketentuan</a>.</span>
                                 </label>
                             </div>
                             <div class="text-center">
@@ -132,36 +125,29 @@
                     </div>
                 </div>
                 <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
-                    <!--begin::Links-->
                     <div class="d-flex flex-center fw-bold fs-6">
                         <a href="#" class="text-muted text-hover-primary px-2" target="_blank">About</a>
                         <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Support</a>
                         <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Purchase</a>
                     </div>
-                    <!--end::Links-->
                 </div>
-                <!--end::Footer-->
             </div>
-            <!--end::Body-->
         </div>
-        <!--end::Authentication - Sign-up-->
     </div>
-    <!--end::Main-->
     <script>
         var hostUrl = "assets/";
     </script>
-    <!--begin::Javascript-->
-    <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
-    <!--end::Global Javascript Bundle-->
-    <!--begin::Page Custom Javascript(used by this page)-->
     <script>
         var url_register = "{{ route('register.post') }}";
     </script>
     <script src="{{ asset('assets/js/custom/authentication/sign-up/general.js') }}"></script>
-    <!--end::Page Custom Javascript-->
-    <!--end::Javascript-->
+    <script>
+        function modal_syarat() {
+            alert();
+        }
+    </script>
 </body>
 <!--end::Body-->
 

@@ -50,7 +50,7 @@ class VerificationController extends Controller
 		$pageTitle = 'Verifikasi';
 		$SubPageTitle = 'verifikasi';
         return $request->user()->hasVerifiedEmail()
-                        ? redirect($this->redirectPath())
+                        ? redirect(route('home'))
                         : view('auth.verify',compact('pageTitle','SubPageTitle'));
     }
 	public function verify(Request $request)
