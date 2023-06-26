@@ -9,7 +9,7 @@ var KTCreateAccount = function () {
 				o = t.querySelector('[data-kt-stepper-action="submit"]'),
 				s = t.querySelector('[data-kt-stepper-action="next"]'),
 				(r = new KTStepper(t)).on("kt.stepper.changed", (function (e) {
-					4 === r.getCurrentStepIndex() ? (o.classList.remove("d-none"),
+					3 === r.getCurrentStepIndex() ? (o.classList.remove("d-none"),
 						o.classList.add("d-inline-block"),
 						s.classList.add("d-none")) : 5 === r.getCurrentStepIndex() ? (o.classList.add("d-none"),
 							s.classList.add("d-none")) : (o.classList.remove("d-inline-block"),
@@ -18,24 +18,22 @@ var KTCreateAccount = function () {
 				}
 				)),
 				r.on("kt.stepper.next", (function (e) {
-					console.log("stepper.next");
 					var t = a[e.getCurrentStepIndex() - 1];
 					t ? t.validate().then((function (t) {
-						console.log("validated!"),
-							"Valid" == t ?
-								(e.goNext(), KTUtil.scrollTop()) :
-								Swal.fire({
-									text: "Selesaikan Pembayaran Anda Terlebih Dahulu.",
-									icon: "error",
-									buttonsStyling: !1,
-									confirmButtonText: "Ok, got it!",
-									customClass: {
-										confirmButton: "btn btn-light"
-									}
-								}).then((function () {
-									KTUtil.scrollTop()
+						"Valid" == t ?
+							(e.goNext(), KTUtil.scrollTop()) :
+							Swal.fire({
+								text: "Mohon Cek Kembali, Form yang belum di isi atau lakukan pembayaran registrasi terlebih dahulu",
+								icon: "error",
+								buttonsStyling: !1,
+								confirmButtonText: "Ok, got it!",
+								customClass: {
+									confirmButton: "btn btn-light"
 								}
-								))
+							}).then((function () {
+								KTUtil.scrollTop()
+							}
+							))
 					}
 					)) : (e.goNext(),
 						KTUtil.scrollTop())
@@ -56,20 +54,6 @@ var KTCreateAccount = function () {
 								}
 							}
 						},
-						// nama_pengirim: {
-						// 	validators: {
-						// 		notEmpty: {
-						// 			message: "Nama Pemilik Rekening Wajib diisi"
-						// 		}
-						// 	}
-						// },
-						// bukti_pengiriman: {
-						// 	validators: {
-						// 		notEmpty: {
-						// 			message: "Bukti Transfer Wajib diisi"
-						// 		}
-						// 	}
-						// }
 					},
 					plugins: {
 						trigger: new FormValidation.plugins.Trigger,
@@ -82,24 +66,38 @@ var KTCreateAccount = function () {
 				})),
 				a.push(FormValidation.formValidation(i, {
 					fields: {
-						account_team_size: {
-							validators: {
-								notEmpty: {
-									message: "Time size is required"
-								}
-							}
-						},
 						account_name: {
 							validators: {
 								notEmpty: {
-									message: "Account name is required"
+									message: "Nama Lengkap wajib diisi"
 								}
 							}
 						},
-						account_plan: {
+						nisn: {
 							validators: {
 								notEmpty: {
-									message: "Account plan is required"
+									message: "NISN Wajib diisi"
+								}
+							}
+						},
+						jenis_kelamin: {
+							validators: {
+								notEmpty: {
+									message: "Jenis Kelamin Wajib diisi"
+								}
+							}
+						},
+						tanggal_lahir: {
+							validators: {
+								notEmpty: {
+									message: "Tanggal Lahir Wajib diisi"
+								}
+							}
+						},
+						tempat_lahir: {
+							validators: {
+								notEmpty: {
+									message: "Tempat Lahir Wajib diisi"
 								}
 							}
 						}

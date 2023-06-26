@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Xendit\Xendit;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
@@ -16,22 +17,45 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        // $this->middleware(['auth','verified']);
+        $this->middleware(['auth']);
     }
 
     public function index()
     {
 		$pageTitle 		= "Dashboard";
 		$SubPageTitle 	= "Dashboard";
-		if (Auth::user()->role == 'siswa'&&(Auth::user()->status_akun == 0)) 
+		if (Auth::user()->role == 'siswa' && (Auth::user()->status_akun == 0)) 
 		{
 			Xendit::setApiKey($this->token);
-		
-			$va = \Xendit\VirtualAccounts::getVABanks();
-			$status_pembayaran = Pembayaran::where('user_id',Auth::id())->first()->status_pembayaran;
-			return view("auth.datadiri", compact('va','status_pembayaran'));
+			$kota 				= \Indonesia::allCities();
+			$desa				= \Indonesia::allVillages();
+			$prov				= \Indonesia::allProvinces();
+			$daerah				= \Indonesia::allDistricts();
+			$status_pembayaran	= Pembayaran::where('user_id',Auth::id())->first()->status_pembayaran;
+			$pageTitle 			= 'Data Diri';
+			$SubPageTitle 		= 'Isi Lengakap Data Diri Anda';
+			return view("PPDB.datadiri", compact('status_pembayaran','kota','pageTitle','SubPageTitle','desa','prov','daerah'));
 			
 		}
         return view('home', compact('pageTitle','SubPageTitle'));
     }
+
+	function get_kota(Request $request) 
+	{
+		$term = trim($request->q);
+		if (empty($term)) {
+            return response()->json([]);
+        }
+
+        $tags = \Indonesia::search('jakarta')->allCities();
+
+        $formatted_tags = [];
+
+        foreach ($tags as $tag) {
+            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->name];
+        }
+
+        return \Response::json($formatted_tags);
+	}
 }

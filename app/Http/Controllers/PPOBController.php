@@ -91,4 +91,44 @@ class PPOBController extends Controller
 		
 		return response()->json($res);
  	}
+
+	function proses_kirim_data(Request $request) {
+		// dd($request->all());
+
+		$customMessages = [
+        	'required' => ' :attribute wajib diisi.',
+			'unique' => ':attribute Telah digunakan',
+			'numeric' => ':attribute Harus berupa Angka',
+			// 'min' => ':attribute Terlalu Pendek , Minimal 10 Angka',
+			// 'max' => ':attribute Terlalu Panjang , Maksimal 10 Angka',
+			'digits' => ':attribute Harus 10 Angka',
+    	];
+		$valid  = $request->validate([
+			'nisn' 				=> 'required|numeric|digits:10|unique:table_data_siswa,nis',
+            'jenis_kelamin'	 	=> 'required|string|max:255',
+            'tanggal_lahir' 	=> 'required|string',
+            'tempat_lahir' 		=> 'required|string',
+			'nomerhp' 			=> 'required|numeric|min:10',
+        ],$customMessages);
+
+		return response()->json($bulan_val);
+
+	}
+
+
+	function cities(Request $request , $id)
+	{
+		$search = DB::table('indonesia_cities')->where('province_code',$id)->where('name','LIKE','%'.$request->q.'%')->orderby('name','ASC')->get();
+		return response()->json($search);
+	}
+	function districts(Request $request ,$id)
+	{
+		$search = DB::table('indonesia_districts')->where('city_code',$id)->where('name','LIKE','%'.$request->q.'%')->orderby('name','ASC')->get();
+		return response()->json($search);
+	}
+
+	function villages(Request $request ,$id)  {
+		$search = DB::table('indonesia_villages')->where('district_code',$id)->where('name','LIKE','%'.$request->q.'%')->orderby('name','ASC')->get();
+		return response()->json($search);
+	}
 }

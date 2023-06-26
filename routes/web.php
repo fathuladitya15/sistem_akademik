@@ -42,7 +42,13 @@ Route::middleware('revalidate')->group(function (){
 		Route::get('/PPDB',[PPOBController::class,'index'])->name('PPOB.index');
 		Route::get('/PPDB/data',[PPOBController::class,'data_ppdb'])->name('PPDB.Ajax');
 		Route::get('/PPDB/verifikasi_pembayaran/{id}',[PPOBController::class,'verifikasi_pembayaran'])->name('PPDB.verifikasi_pembayaran');
+		Route::get('/PPDB/get_kota',[PPOBController::class,'get_kota'])->name('PPDB.get_kota');
+		// Route::get('/dashboard',[HomeController::class,'index'])->name('dashboard');
 	});
+	Route::post('PPDB/post_data',[PPOBController::class,'proses_kirim_data'])->name('PPDB.kirim_data');
+	Route::get('/get_kota/{id}',[PPOBController::class,'cities'])->name('get_kota_by_code_provinsi');
+	Route::get('/get_daerah/{id}',[PPOBController::class,'districts'])->name('get_daerah_by_code_kota');
+	Route::get('/get_desa/{id}',[PPOBController::class,'villages'])->name('get_desa_by_code_daerah');
 });
 
 Route::get('/get_balance',[XenditController::class,'Balance'])->name('Xendit.Balance');
