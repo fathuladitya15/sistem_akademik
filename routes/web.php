@@ -49,6 +49,7 @@ Route::middleware('revalidate')->group(function (){
 	Route::get('/get_kota/{id}',[PPOBController::class,'cities'])->name('get_kota_by_code_provinsi');
 	Route::get('/get_daerah/{id}',[PPOBController::class,'districts'])->name('get_daerah_by_code_kota');
 	Route::get('/get_desa/{id}',[PPOBController::class,'villages'])->name('get_desa_by_code_daerah');
+	Route::get('/cek_status_berkas/{id}',[PPOBController::class,'cek_berkas'])->name("PPDB.cek_berkas");
 });
 
 Route::get('/get_balance',[XenditController::class,'Balance'])->name('Xendit.Balance');

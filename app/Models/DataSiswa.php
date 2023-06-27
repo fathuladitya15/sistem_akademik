@@ -11,5 +11,5 @@ class DataSiswa extends Model
 	
 	protected $table  = 'table_data_siswa';
 
-	protected $fillable = ['user_id','nis','jenis_kelamin','tempat_lahir','tanggal_lahir','alamat','nomer_telepon','hobby'];
+	protected $fillable = ['user_id','nis','jenis_kelamin','tempat_lahir','tanggal_lahir','alamat','nomer_telepon','hobby','provinsi_code','kota_code','district_code','villages_code'];
 }

@@ -93,15 +93,12 @@ class PPOBController extends Controller
  	}
 
 	function proses_kirim_data(Request $request) {
-		// dd($request->all());
 
 		$customMessages = [
-        	'required' => ' :attribute wajib diisi.',
-			'unique' => ':attribute Telah digunakan',
-			'numeric' => ':attribute Harus berupa Angka',
-			// 'min' => ':attribute Terlalu Pendek , Minimal 10 Angka',
-			// 'max' => ':attribute Terlalu Panjang , Maksimal 10 Angka',
-			'digits' => ':attribute Harus 10 Angka',
+        	'required' 	=> ' :attribute wajib diisi.',
+			'unique' 	=> ':attribute Telah digunakan',
+			'numeric' 	=> ':attribute Harus berupa Angka',
+			'digits' 	=> ':attribute Harus 10 Angka',
     	];
 		$valid  = $request->validate([
 			'nisn' 				=> 'required|numeric|digits:10|unique:table_data_siswa,nis',
@@ -109,12 +106,38 @@ class PPOBController extends Controller
             'tanggal_lahir' 	=> 'required|string',
             'tempat_lahir' 		=> 'required|string',
 			'nomerhp' 			=> 'required|numeric|min:10',
+			'provinsi'			=> 'required',
+			'kota_add'			=> 'required',
+			'daerah'			=> 'required',
+			'desa'				=> 'required',
+			'alamat'			=> 'required',
         ],$customMessages);
 
-		return response()->json($bulan_val);
+
+		$data = [
+			'user_id' => Auth::id(),
+			'nis' => $request->nisn,
+			'jenis_kelamin' => $request->jenis_kelamin,
+			'tempat_lahir' => $request->tempat_lahir,
+			'tanggal_lahir' => $request->tanggal_lahir,
+			'alamat' => $request->alamat,
+			'nomer_telepon' => $request->nomerhp,
+			'hobby' => "TTT",
+			'provinsi_code' => $request->provinsi,
+			'kota_code' => $request->kota_add,
+			'district_code' => $request->daerah,
+			'villages_code' => $request->desa,
+ 		];
+
+		$create = DataSiswa::create($data);
+		if ($create) {
+			$response = ['sukses' => TRUE, 'pesan' => 'Data Anda Telah disimpan', 'sub' => 'Melanjutkan ke tahap selanjutnya...'];
+		}else {
+			$response = ['sukses' => FALSE ,'pesan' => 'Terjadi Kesalahan','sub' => 'Cek di proses kirim data'];
+		}
+		return response()->json($response);
 
 	}
-
 
 	function cities(Request $request , $id)
 	{
@@ -126,9 +149,21 @@ class PPOBController extends Controller
 		$search = DB::table('indonesia_districts')->where('city_code',$id)->where('name','LIKE','%'.$request->q.'%')->orderby('name','ASC')->get();
 		return response()->json($search);
 	}
-
 	function villages(Request $request ,$id)  {
 		$search = DB::table('indonesia_villages')->where('district_code',$id)->where('name','LIKE','%'.$request->q.'%')->orderby('name','ASC')->get();
 		return response()->json($search);
+	}
+
+	function cek_berkas($id) 
+	{
+		$data  = DataSiswa::where('user_id',$id)->first()->status_kelengkapan;
+		if ($data == "" && $data == null) {
+			$update = DataSiswa::where('user_id',$id)->update(['status_kelengkapan' => 0]);
+			return response()->json(['sukses' => TRUE,'pesan' => 'Kami Akan Meninjau Data Anda Terlebih Dahulu, ','sub' => "Tunggun Konfirmasi Kami Melalui Email Atau Whatsapp"]);
+		}else {
+
+			return response()->json(['sukses' => FALSE,'pesan' => 'Kami Sedang Mengecek Berkas Anda, ','sub' => "Tunggun Konfirmasi Kami Melalui Email Atau Whatsapp"]);
+
+		}
 	}
 }

@@ -16,8 +16,14 @@ return new class extends Migration
 			$table->string('tempat_lahir');
 			$table->date('tanggal_lahir');
 			$table->text('alamat');
-			$table->integer('nomer_telepon');
-			$table->text('hobby');
+			$table->string('nomer_telepon');
+			$table->text('hobby')->nullable();
+			$table->string('provinsi_code');
+			$table->string('kota_code');
+			$table->string('district_code');
+			$table->string('villages_code');
+			$table->string('status_kelengkapan')->nullable();
+			$table->string('jalur_pendaftaran')->nullable();
             $table->timestamps();
         });
     }

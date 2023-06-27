@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Xendit\Xendit;
+use App\Models\DataSiswa;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
@@ -17,7 +18,6 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        // $this->middleware(['auth','verified']);
         $this->middleware(['auth']);
     }
 
@@ -33,9 +33,11 @@ class HomeController extends Controller
 			$prov				= \Indonesia::allProvinces();
 			$daerah				= \Indonesia::allDistricts();
 			$status_pembayaran	= Pembayaran::where('user_id',Auth::id())->first()->status_pembayaran;
+			$datadiri			= DataSiswa::where('user_id',Auth::id())->count();
 			$pageTitle 			= 'Data Diri';
 			$SubPageTitle 		= 'Isi Lengakap Data Diri Anda';
-			return view("PPDB.datadiri", compact('status_pembayaran','kota','pageTitle','SubPageTitle','desa','prov','daerah'));
+			$cek_berkas			= DataSiswa::where('user_id',Auth::id())->first()->status_kelengkapan;
+			return view("PPDB.datadiri", compact('datadiri','status_pembayaran','kota','pageTitle','SubPageTitle','desa','prov','daerah','cek_berkas'));
 			
 		}
         return view('home', compact('pageTitle','SubPageTitle'));
