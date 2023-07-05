@@ -48,6 +48,20 @@ class PPOBController extends Controller
 			}
 			return $r;
 		})
+		->addColumn('status_berkas', function ($data)  {
+			$siswa = DataSiswa::where('user_id',$data->id)->first();
+			if ($siswa->status_kelengkapan == null) {
+				$s = '<div class="badge badge-light-warning fw-bolder">Belum Menyerahkan</div>';
+			}else if($siswa->status_kelengkapan == 0 ) {
+				$s = '<div class="badge badge-light-info fw-bolder">Cek Berkas </div>';
+			}else if($siswa->status_kelengkapan == 1) {
+				$s = '<div class="badge badge-light-warning fw-bolder">Berkas ada, Belum Komplit</div>';
+			}
+			else if($siswa->status_kelengkapan == 2) {
+				$s = '<div class="badge badge-light-success fw-bolder">Berkas Komplit</div>';
+			}
+			return $s;
+		})
 		->addColumn('status_siswa', function ($data){
 			$find = DataSiswa::where('user_id',$data->id)->first();
 
@@ -63,14 +77,20 @@ class PPOBController extends Controller
 					return '';
 				}else {
 					
-				return '<a href="javascript:void(0)" onclick="verifikasi('.$data->id.')" id="verifikasi_pembayaran" class="btn btn-light btn-active-light-primary btn-sm" title="Verifikasi Pembayaran" >
+					$pay = '<a href="javascript:void(0)" onclick="verifikasi('.$data->id.')" id="verifikasi_pembayaran" class="btn btn-light btn-active-light-primary btn-sm" title="Verifikasi Pembayaran" >
                                 <span class="svg-icon svg-icon-5 m-0">
 								 <img src="assets/media/icons/new/invoice.svg"  width="24" height="24" alt="">	
                                 </span>
                             </a>';
+					$berkas = '<a href="javascript:void(0)" onclick="berkas('.$data->id.')" id="verifikasi_berkas" class="btn btn-light btn-active-light-primary btn-sm" title="Verifikasi Pemberkasan" >
+                                <span class="svg-icon svg-icon-5 m-0">
+								 <img src="assets/media/icons/duotune/files/fil006.svg"  width="24" height="24" alt="">	
+                                </span>
+                            </a>';
+				return $pay.$berkas;
 				}
 		})
-		->rawColumns(['action','status_pembayaran','created_at']);
+		->rawColumns(['action','status_pembayaran','created_at','status_berkas']);
 		
 		
 		return $table->make(true);
@@ -165,5 +185,23 @@ class PPOBController extends Controller
 			return response()->json(['sukses' => FALSE,'pesan' => 'Kami Sedang Mengecek Berkas Anda, ','sub' => "Tunggun Konfirmasi Kami Melalui Email Atau Whatsapp"]);
 
 		}
+	}
+
+	function verifikasi_pemberkasan($id)  
+	{
+		$get_data  = DataSiswa::where('user_id',$id)->first();
+		if ($get_data) {
+			$data = User::where('id',$id)->first();
+			$data->status_akun = 1;
+			$data->update();
+			
+			$get_data->status_kelengkapan = 1;
+			$get_data->update();
+
+			$res = ['sukses' => TRUE,'pesan' => 'Pemberkasan Telah di Update'];
+		}else {
+			$res = ['sukses' => FALSE,'pesan' => 'Terjadi Kesalahan, Cek controller'];
+		}
+ 		return response()->json($res);
 	}
 }

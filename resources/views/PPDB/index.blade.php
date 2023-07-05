@@ -202,6 +202,7 @@
                         <th class="min-w-125px">Nama Peserta Didik</th>
                         <th class="min-w-125px">Status Pendaftaran</th>
                         <th class="min-w-125px">Status Pembayaran</th>
+                        <th class="min-w-125px">Status Pemberkasan</th>
                         <th class="min-w-125px">Tanggal Registrasi</th>
                         <th class="text-end min-w-100px">Actions</th>
                     </tr>
@@ -217,7 +218,6 @@
             <!--end::Table-->
         </div>
         <!--end::Card body-->
-
     </div>
 @endsection
 @push('js')
@@ -255,6 +255,11 @@
                 {
                     data: 'status_pembayaran',
                     name: 'status_pembayaran'
+                },
+
+                {
+                    data: 'status_berkas',
+                    name: 'status_berkas'
                 },
 
                 {
@@ -331,7 +336,6 @@
                         url: '/PPDB/verifikasi_pembayaran/' + id,
                         type: "GET",
                         success: function(res) {
-                            // console.log(res)
                             if (res.sukses == true) {
                                 Swal.fire(
                                     'Pembayaran Terverifikasi !',
@@ -348,6 +352,50 @@
                             table.ajax.reload();
                         },
                         error: function(er) {
+                            Swal.fire(
+                                'Error !',
+                                'Terjadi Kesalahan , Hubungi Tim Terkait !',
+                                'error'
+                            )
+                        }
+                    })
+                }
+            })
+        }
+
+        function berkas(id) {
+            Swal.fire({
+                title: 'Anda Yakin?',
+                text: "Konfirmasi Pembayaran Atas nama Tersebut !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Konfirmasi !'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/PPDB/verifikasi_pemberkasan/' + id,
+                        type: "GET",
+                        success: function(res) {
+                            console.log(res)
+                            if (res.sukses == true) {
+                                Swal.fire(
+                                    'Pembayaran Terverifikasi !',
+                                    res.pesan,
+                                    'success'
+                                )
+                            } else {
+                                Swal.fire(
+                                    'Ups !',
+                                    res.pesan,
+                                    'warning'
+                                )
+                            }
+                            table.ajax.reload();
+                        },
+                        error: function(er) {
+                            console.log(res)
                             Swal.fire(
                                 'Error !',
                                 'Terjadi Kesalahan , Hubungi Tim Terkait !',

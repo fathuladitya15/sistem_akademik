@@ -25,8 +25,7 @@ class HomeController extends Controller
     {
 		$pageTitle 		= "Dashboard";
 		$SubPageTitle 	= "Dashboard";
-		if (Auth::user()->role == 'siswa' && (Auth::user()->status_akun == 0)) 
-		{
+		if (Auth::user()->role == 'siswa' && (Auth::user()->status_akun == 0)) {
 			Xendit::setApiKey($this->token);
 			$kota 				= \Indonesia::allCities();
 			$desa				= \Indonesia::allVillages();

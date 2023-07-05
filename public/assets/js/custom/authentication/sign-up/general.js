@@ -48,10 +48,6 @@ var KTSignupGeneral = function () {
 								},
 								callback: {
 									message: "Masukan Password yang Valid",
-									// callback: function (e) {
-									// 	if (e.value.length > 0)
-									// 		return r()
-									// }
 								}
 							}
 						},
@@ -101,7 +97,6 @@ var KTSignupGeneral = function () {
 										data: $('#kt_sign_up_form').serialize(),
 										type: "POST",
 										success: function (res) {
-											console.log(res)
 											if (res.sukses == true) {
 												Swal.fire({
 													title: 'Login Berhasil !',
@@ -114,10 +109,8 @@ var KTSignupGeneral = function () {
 													},
 												}).then((result) => {
 													window.location.href = "/home";
-													// console.log(res);
 												})
 											} else {
-												console.log(res)
 												Swal.fire({
 													text: res.er,
 													icon: "error",
@@ -130,7 +123,6 @@ var KTSignupGeneral = function () {
 											}
 										}, error: function (er) {
 											var msg = er.responseJSON.message
-											console.log(er)
 											Swal.fire({
 												text: "Opps ," + msg,
 												icon: "error",

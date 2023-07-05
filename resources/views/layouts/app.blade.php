@@ -12,8 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @stack('css')
@@ -22,6 +24,7 @@
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }} " rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -123,6 +126,18 @@
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
     <!--end::Page Vendors Javascript-->
+    <!-- <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('a1809c8e45a4dca61c3b', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script> -->
     @stack('js')
     <!--end::Javascript-->
 </body>

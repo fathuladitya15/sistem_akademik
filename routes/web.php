@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PPOBController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\XenditController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\UserManagementController;
 
@@ -42,8 +43,15 @@ Route::middleware('revalidate')->group(function (){
 		Route::get('/PPDB',[PPOBController::class,'index'])->name('PPOB.index');
 		Route::get('/PPDB/data',[PPOBController::class,'data_ppdb'])->name('PPDB.Ajax');
 		Route::get('/PPDB/verifikasi_pembayaran/{id}',[PPOBController::class,'verifikasi_pembayaran'])->name('PPDB.verifikasi_pembayaran');
+		Route::get('/PPDB/verifikasi_pemberkasan/{id}',[PPOBController::class,'verifikasi_pemberkasan'])->name('PPDB.verifikasi_pemberkasan');
 		Route::get('/PPDB/get_kota',[PPOBController::class,'get_kota'])->name('PPDB.get_kota');
-		// Route::get('/dashboard',[HomeController::class,'index'])->name('dashboard');
+
+
+		Route::get('/ClassManagement',[ClassroomController::class,'index'])->name('class.index');
+		Route::get('/ClassManagement/data',[ClassroomController::class,'data_index'])->name('class.data');
+		Route::post('/ClassManagement/save',[ClassroomController::class,'save'])->name('class.save');
+		Route::get('/ClassManagement/get/{id}',[ClassroomController::class,'get_data'])->name('class.get');
+		Route::delete('/ClassManagement/hapus/{id}',[ClassroomController::class,'hapus'])->name('class.delete');
 	});
 	Route::post('PPDB/post_data',[PPOBController::class,'proses_kirim_data'])->name('PPDB.kirim_data');
 	Route::get('/get_kota/{id}',[PPOBController::class,'cities'])->name('get_kota_by_code_provinsi');
