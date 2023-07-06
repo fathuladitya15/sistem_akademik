@@ -7,6 +7,7 @@ use Auth;
 use DataTables;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Jurusan;
 use App\Models\DataSiswa;
 use App\Models\Pembayaran;
 
@@ -208,5 +209,37 @@ class PPOBController extends Controller
 			$res = ['sukses' => FALSE,'pesan' => 'Terjadi Kesalahan, Cek controller'];
 		}
  		return response()->json($res);
+	}
+
+
+	function index_data_siswa()  {
+		$pageTitle = 'Data Siswa Tahun Ajaran '. tahun_ajaran('baru');
+		$SubPageTitle = 'Data Siswa Tahun Ajaran '. tahun_ajaran('baru');
+
+		return view('PPDB.siswa_baru', compact('pageTitle','SubPageTitle'));
+	}
+
+	function ajax_data_siswa()  
+	{
+		$tahun_ajaran = tahun_ajaran('baru');
+		$data = DataSiswa::where('tahun_ajaran',$tahun_ajaran)->orderby('jurusan_id')->get();
+		
+		$table = Datatables::of($data)
+		->addIndexColumn()
+		->addColumn('name', function ($data) {
+			$data = User::where('id',$data->user_id)->first();
+
+			return $data->name;
+		})
+		->addColumn('jurusan_id', function ($data)  {
+			$jurusan_p   = Jurusan::where('id',$data->jurusan_id)->first()->singkatan_jurusan;
+			$jurusan     = Jurusan::where('id',$data->jurusan_opsi_id)->first()->singkatan_jurusan;
+
+			return $jurusan_p.','.$jurusan;
+		})
+		->rawColumns(['name','jurusan_id']);
+		
+		
+		return $table->make(true);
 	}
 }
