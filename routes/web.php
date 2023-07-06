@@ -52,6 +52,14 @@ Route::middleware('revalidate')->group(function (){
 		Route::post('/ClassManagement/save',[ClassroomController::class,'save'])->name('class.save');
 		Route::get('/ClassManagement/get/{id}',[ClassroomController::class,'get_data'])->name('class.get');
 		Route::delete('/ClassManagement/hapus/{id}',[ClassroomController::class,'hapus'])->name('class.delete');
+
+		Route::get('/jurusan',[ClassroomController::class,'jurusan_index'])->name('jurusan.index');
+		Route::get('/jurusan/data',[ClassroomController::class,'jurusan_data_index'])->name('jurusan.data');
+		Route::post('/jurusan/save',[ClassroomController::class,'jurusan_save'])->name('jurusan.save');
+		Route::get('/jurusan/get/{id}',[ClassroomController::class,'jurusan_get_data'])->name('jurusan.get');
+		Route::delete('/jurusan/hapus/{id}',[ClassroomController::class,'jurusan_hapus'])->name('jurusan.delete');
+
+
 	});
 	Route::post('PPDB/post_data',[PPOBController::class,'proses_kirim_data'])->name('PPDB.kirim_data');
 	Route::get('/get_kota/{id}',[PPOBController::class,'cities'])->name('get_kota_by_code_provinsi');

@@ -281,51 +281,6 @@
                                     <a class="menu-link {{ menuActive('class.index') }}"
                                         href="{{ route('class.index') }}">
                                         <span class="menu-icon">
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 48 48" fill="none">
-                                                    <defs>
-                                                        <style>
-                                                            .a {
-                                                                fill: none;
-                                                                stroke: #000000;
-                                                                stroke-linecap: round;
-                                                                stroke-linejoin: round;
-                                                            }
-                                                        </style>
-                                                    </defs>
-                                                    <rect class="a" x="4.5" y="8.4"
-                                                        width="39" height="31.2" rx="2" />
-                                                    <rect class="a" x="8.5" y="12.4"
-                                                        width="31" height="23.2" rx="1" />
-                                                    <rect class="a" x="29.68" y="33.41"
-                                                        width="6.62" height="2.19" />
-                                                    <path class="a"
-                                                        d="M25.84,19a2.6,2.6,0,0,0-3.68,0l0,0a2.61,2.61,0,1,0,4.46,1.86A2.54,2.54,0,0,0,25.82,19Z" />
-                                                    <path class="a"
-                                                        d="M22,25.53h4a3,3,0,0,1,3,3v1.21a0,0,0,0,1,0,0H19a0,0,0,0,1,0,0V28.53A3,3,0,0,1,22,25.53Z" />
-                                                    <path class="a"
-                                                        d="M17.42,21.47a2,2,0,0,0-2.84,0l0,0A2,2,0,1,0,18,22.91a2,2,0,0,0-.6-1.43Z" />
-                                                    <path class="a"
-                                                        d="M19.34,27.14a2,2,0,0,0-1.47-.65H14.13a2,2,0,0,0-2,2v1.25H19" />
-                                                    <path class="a"
-                                                        d="M33.42,21.47a2,2,0,0,0-2.84,0l0,0A2,2,0,1,0,34,22.91a2,2,0,0,0-.6-1.43Z" />
-                                                    <path class="a"
-                                                        d="M29,29.74h6.86V28.49a2,2,0,0,0-2-2H30.13a2,2,0,0,0-1.47.65" />
-                                                </svg>
-                                            </span>
-                                        </span>
-                                        <span class="menu-title">Management Kelas</span>
-                                    </a>
-                                </div>
-
-                                <div class="menu-item">
-                                    <a class="menu-link " href="">
-
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none">
@@ -343,7 +298,32 @@
                                                         fill="black" />
                                                 </svg>
                                             </span>
-                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title">Management Kelas</span>
+                                    </a>
+                                </div>
+
+                                <div class="menu-item">
+                                    <a class="menu-link {{ menuActive('jurusan.index') }}"
+                                        href="{{ route('jurusan.index') }}">
+                                        <span class="menu-icon">
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        d="M11.2929 2.70711C11.6834 2.31658 12.3166 2.31658 12.7071 2.70711L15.2929 5.29289C15.6834 5.68342 15.6834 6.31658 15.2929 6.70711L12.7071 9.29289C12.3166 9.68342 11.6834 9.68342 11.2929 9.29289L8.70711 6.70711C8.31658 6.31658 8.31658 5.68342 8.70711 5.29289L11.2929 2.70711Z"
+                                                        fill="black" />
+                                                    <path
+                                                        d="M11.2929 14.7071C11.6834 14.3166 12.3166 14.3166 12.7071 14.7071L15.2929 17.2929C15.6834 17.6834 15.6834 18.3166 15.2929 18.7071L12.7071 21.2929C12.3166 21.6834 11.6834 21.6834 11.2929 21.2929L8.70711 18.7071C8.31658 18.3166 8.31658 17.6834 8.70711 17.2929L11.2929 14.7071Z"
+                                                        fill="black" />
+                                                    <path opacity="0.3"
+                                                        d="M5.29289 8.70711C5.68342 8.31658 6.31658 8.31658 6.70711 8.70711L9.29289 11.2929C9.68342 11.6834 9.68342 12.3166 9.29289 12.7071L6.70711 15.2929C6.31658 15.6834 5.68342 15.6834 5.29289 15.2929L2.70711 12.7071C2.31658 12.3166 2.31658 11.6834 2.70711 11.2929L5.29289 8.70711Z"
+                                                        fill="black" />
+                                                    <path opacity="0.3"
+                                                        d="M17.2929 8.70711C17.6834 8.31658 18.3166 8.31658 18.7071 8.70711L21.2929 11.2929C21.6834 11.6834 21.6834 12.3166 21.2929 12.7071L18.7071 15.2929C18.3166 15.6834 17.6834 15.6834 17.2929 15.2929L14.7071 12.7071C14.3166 12.3166 14.3166 11.6834 14.7071 11.2929L17.2929 8.70711Z"
+                                                        fill="black" />
+                                                </svg>
+                                            </span>
                                         </span>
                                         <span class="menu-title">Management Jurusan</span>
                                     </a>
