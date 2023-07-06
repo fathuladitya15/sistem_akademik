@@ -136,6 +136,13 @@
                                 </select>
                             </div>
 
+
+                            <div class="mb-10 fv-row">
+                                <label class="form-label mb-3">Nilai Rata Rata Raport </label>
+                                <input name="nilai_rata" id="nilai_rata"
+                                    class="form-control form-control-lg form-control-solid">
+                            </div>
+
                             <caption>Apabila Tidak diterima keduanya, pihak kami akan menghubungi anda melalui Whatsapp atau
                                 Telepon, Harap Masukan nomer telepon anda yang aktif</caption>
                         </div>

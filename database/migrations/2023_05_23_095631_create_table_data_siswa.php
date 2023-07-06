@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('table_data_siswa', function (Blueprint $table) {
             $table->id();
 			$table->integer('user_id');
-			$table->integer('nis');
+			$table->string('nis');
 			$table->string('jenis_kelamin');
 			$table->string('tempat_lahir');
 			$table->date('tanggal_lahir');
@@ -25,6 +25,9 @@ return new class extends Migration
 			$table->string('jalur_pendaftaran')->nullable();
 			$table->string('jurusan_id');
 			$table->string('jurusan_opsi_id');
+			$table->string('kelas');
+			$table->string('tahun_ajaran');
+			$table->string('nilai_rata');
             $table->timestamps();
         });
     }

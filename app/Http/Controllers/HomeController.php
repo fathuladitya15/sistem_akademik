@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use DB;
+use Carbon\Carbon;
 use Xendit\Xendit;
 use App\Models\DataSiswa;
 use App\Models\Pembayaran;
@@ -42,7 +44,9 @@ class HomeController extends Controller
 			return view("PPDB.datadiri", compact('datadiri','status_pembayaran','kota','pageTitle','SubPageTitle','desa','prov','daerah','cek_berkas','jurusan'));
 			
 		}
+
         return view('home', compact('pageTitle','SubPageTitle'));
+
     }
 
 	function get_kota(Request $request) 

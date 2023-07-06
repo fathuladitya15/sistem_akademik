@@ -146,6 +146,9 @@ class PPOBController extends Controller
 			'villages_code' => $request->desa,
 			'jurusan_id' => $request->jurusan,
 			'jurusan_opsi_id' => $request->jurusan2,
+			'kelas' => 10,
+			'tahun_ajaran' => tahun_ajaran('baru'),
+			'nilai_rata' => $request->nilai_rata,
  		];
 		if ($request->jurusan != $request->jurusan2) {
 			$create = DataSiswa::create($data);

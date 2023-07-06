@@ -1,5 +1,7 @@
 <?php 
 
+use Carbon\Carbon;
+
 if (!function_exists('inisial')) {
     function inisial($name)
     {
@@ -54,6 +56,27 @@ if (!function_exists('regex')) {
 			return FALSE;
 		}
 		// return $res;
+	}
+}
+
+if (!function_exists('tahun_ajaran')) {
+	function tahun_ajaran($status = null)  {
+		$tahun_sekarang 			= Carbon::now()->format('Y');
+		$tahun_kemarin 				= Carbon::now()->subYear()->format('Y');
+		$tahun_besok 				= Carbon::now()->addYear(1)->format('Y');
+		$tanggal_skarang 			= Carbon::now()->format('d m Y');
+		$penentuan_ajaran_baru  	= '10-07-'.$tahun_sekarang;
+
+		if ($status == 'baru') {
+			$date = '10-07-'.$tahun_sekarang;
+			$tanggal_lengkap_sekarang 	= Carbon::parse($date)->format('d-m-Y');
+		}else {
+			$tanggal_lengkap_sekarang 	= Carbon::now()->format('d-m-Y');
+		}
+		
+		$tahun_ajaran 				= $tanggal_lengkap_sekarang >= $penentuan_ajaran_baru ? $tahun_sekarang.'/'.$tahun_besok : $tahun_kemarin.'/'.$tahun_sekarang;
+
+		return $tahun_ajaran;
 	}
 }
 
