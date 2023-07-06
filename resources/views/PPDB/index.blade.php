@@ -244,7 +244,7 @@
                 {
                     data: 'name',
                     name: 'name',
-                    className: "d-flex align-items-center",
+                    // className: "d-flex align-items-center",
                 },
 
                 {
@@ -366,7 +366,7 @@
         function berkas(id) {
             Swal.fire({
                 title: 'Anda Yakin?',
-                text: "Konfirmasi Pembayaran Atas nama Tersebut !",
+                text: "Ingin Menerima Calon Siswa/i ini ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

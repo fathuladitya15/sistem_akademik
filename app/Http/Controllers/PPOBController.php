@@ -50,14 +50,15 @@ class PPOBController extends Controller
 		})
 		->addColumn('status_berkas', function ($data)  {
 			$siswa = DataSiswa::where('user_id',$data->id)->first();
-			if ($siswa->status_kelengkapan == null) {
+			$data  = $siswa != null ? $siswa->status_kelengkapan : "";
+			if ($data == "") {
 				$s = '<div class="badge badge-light-warning fw-bolder">Belum Menyerahkan</div>';
-			}else if($siswa->status_kelengkapan == 0 ) {
+			}else if($data == 0 ) {
 				$s = '<div class="badge badge-light-info fw-bolder">Cek Berkas </div>';
-			}else if($siswa->status_kelengkapan == 1) {
+			}else if($data == 1) {
 				$s = '<div class="badge badge-light-warning fw-bolder">Berkas ada, Belum Komplit</div>';
 			}
-			else if($siswa->status_kelengkapan == 2) {
+			else if($data == 2) {
 				$s = '<div class="badge badge-light-success fw-bolder">Berkas Komplit</div>';
 			}
 			return $s;
@@ -76,18 +77,13 @@ class PPOBController extends Controller
 				if (Auth::id() == $data->id) {
 					return '';
 				}else {
-					
-					$pay = '<a href="javascript:void(0)" onclick="verifikasi('.$data->id.')" id="verifikasi_pembayaran" class="btn btn-light btn-active-light-primary btn-sm" title="Verifikasi Pembayaran" >
-                                <span class="svg-icon svg-icon-5 m-0">
-								 <img src="assets/media/icons/new/invoice.svg"  width="24" height="24" alt="">	
-                                </span>
-                            </a>';
-					$berkas = '<a href="javascript:void(0)" onclick="berkas('.$data->id.')" id="verifikasi_berkas" class="btn btn-light btn-active-light-primary btn-sm" title="Verifikasi Pemberkasan" >
-                                <span class="svg-icon svg-icon-5 m-0">
-								 <img src="assets/media/icons/duotune/files/fil006.svg"  width="24" height="24" alt="">	
-                                </span>
-                            </a>';
-				return $pay.$berkas;
+					$status = Pembayaran::where("user_id",$data->id)->first();
+					if ($status->status_pembayaran != 1) {
+						$pay = '<a href="javascript:void(0)" onclick="verifikasi('.$data->id.')" id="verifikasi_pembayaran" class="btn btn-light btn-active-light-primary btn-sm" title="Verifikasi Pembayaran" >Verifikasi Pembayaran</a>';
+					}else {
+						$pay = '<a href="javascript:void(0)" onclick="berkas('.$data->id.')" id="verifikasi_berkas" class="btn btn-light btn-active-light-primary btn-sm" title="Verifikasi Pemberkasan" >Periksa Berkas</a>';
+					}
+				return $pay;
 				}
 		})
 		->rawColumns(['action','status_pembayaran','created_at','status_berkas']);
@@ -131,6 +127,8 @@ class PPOBController extends Controller
 			'daerah'			=> 'required',
 			'desa'				=> 'required',
 			'alamat'			=> 'required',
+			'jurusan'			=> 'required|string',
+			'jurusan2'			=> 'required|string',
         ],$customMessages);
 
 
@@ -142,18 +140,22 @@ class PPOBController extends Controller
 			'tanggal_lahir' => $request->tanggal_lahir,
 			'alamat' => $request->alamat,
 			'nomer_telepon' => $request->nomerhp,
-			'hobby' => "TTT",
 			'provinsi_code' => $request->provinsi,
 			'kota_code' => $request->kota_add,
 			'district_code' => $request->daerah,
 			'villages_code' => $request->desa,
+			'jurusan_id' => $request->jurusan,
+			'jurusan_opsi_id' => $request->jurusan2,
  		];
-
-		$create = DataSiswa::create($data);
-		if ($create) {
-			$response = ['sukses' => TRUE, 'pesan' => 'Data Anda Telah disimpan', 'sub' => 'Melanjutkan ke tahap selanjutnya...'];
+		if ($request->jurusan != $request->jurusan2) {
+			$create = DataSiswa::create($data);
+			if ($create) {
+				$response = ['sukses' => TRUE, 'pesan' => 'Data Anda Telah disimpan', 'sub' => 'Melanjutkan ke tahap selanjutnya...'];
+			}else {
+				$response = ['sukses' => FALSE ,'pesan' => 'Terjadi Kesalahan','sub' => 'Cek di proses kirim data'];
+			}
 		}else {
-			$response = ['sukses' => FALSE ,'pesan' => 'Terjadi Kesalahan','sub' => 'Cek di proses kirim data'];
+			$response = ['sukses' => FALSE, 'pesan' => 'Jurusan Kedua tidak boleh sama dengan Jurusan Pertama' ,'sub' => 'Pilih Jurusan sesuai dengan keingin anda'];
 		}
 		return response()->json($response);
 

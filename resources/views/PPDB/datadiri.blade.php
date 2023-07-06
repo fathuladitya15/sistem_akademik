@@ -103,6 +103,42 @@
                                     class="form-control form-control-lg form-control-solid" placeholder="Alamat Lengkap"></textarea>
                             </div>
                         </div>
+                        <hr>
+                        <div class="w-100">
+                            <div class="pb-10 pb-lg-15">
+                                <h2 class="fw-bolder text-dark">Pilihan Jurusan</h2>
+                                <div class="text-muted fw-bold fs-6">Pilih jurusan anda, minimal pilih 2 opsi apabila opsi
+                                    pertama tidak lulus/ kelas penuh
+                                </div>
+                            </div>
+
+                            <div class="mb-10 fv-row">
+                                <label class="form-label mb-3">Jurusan </label>
+                                <select name="jurusan" id="jurusan"
+                                    class="form-control form-control-lg form-control-solid">
+                                    <option value="">-- Pilih Jurusan --</option>
+                                    @foreach ($jurusan as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_jurusan }} (
+                                            {{ $item->singkatan_jurusan }} )</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-10 fv-row">
+                                <label class="form-label mb-3">Opsi ke-2 Jurusan </label>
+                                <select name="jurusan2" id="jurusan2"
+                                    class="form-control form-control-lg form-control-solid">
+                                    <option value="">-- Pilih Jurusan --</option>
+                                    @foreach ($jurusan as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_jurusan }} (
+                                            {{ $item->singkatan_jurusan }} )</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <caption>Apabila Tidak diterima keduanya, pihak kami akan menghubungi anda melalui Whatsapp atau
+                                Telepon, Harap Masukan nomer telepon anda yang aktif</caption>
+                        </div>
                         <div class="d-flex flex-stack pt-15">
                             <button type="submit" id="submit" class="btn btn-lg btn-primary" style="float:right">
                                 <span class="indicator-label">Submit

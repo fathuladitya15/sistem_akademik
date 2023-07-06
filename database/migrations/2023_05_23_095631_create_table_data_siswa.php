@@ -17,13 +17,14 @@ return new class extends Migration
 			$table->date('tanggal_lahir');
 			$table->text('alamat');
 			$table->string('nomer_telepon');
-			$table->text('hobby')->nullable();
 			$table->string('provinsi_code');
 			$table->string('kota_code');
 			$table->string('district_code');
 			$table->string('villages_code');
 			$table->string('status_kelengkapan')->nullable();
 			$table->string('jalur_pendaftaran')->nullable();
+			$table->string('jurusan_id');
+			$table->string('jurusan_opsi_id');
             $table->timestamps();
         });
     }
