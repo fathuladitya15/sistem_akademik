@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Setting;
+use App\Models\User;
+use App\Models\DataSiswa;
 
 
 class DatabaseSeeder extends Seeder
@@ -18,9 +19,10 @@ class DatabaseSeeder extends Seeder
 		$this->call([
 			UsersTableSeeder::class,
 			SettingSeeder::class,
+			JurusanSeeder::class,
 		]);
-		// $this->call(SettingSeeder::class);
-        // \App\Models\User::factory(10)->create();
+		User::factory(10)->has(DataSiswa::factory())->create();
+		
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

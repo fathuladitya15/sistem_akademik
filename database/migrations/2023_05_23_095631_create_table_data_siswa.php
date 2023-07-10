@@ -10,21 +10,21 @@ return new class extends Migration
     {
         Schema::create('table_data_siswa', function (Blueprint $table) {
             $table->id();
-			$table->integer('user_id');
+			$table->foreignId('user_id')->constrained('users');
 			$table->string('nis');
 			$table->string('jenis_kelamin');
-			$table->string('tempat_lahir');
+			$table->string('tempat_lahir')->nullable();
 			$table->date('tanggal_lahir');
 			$table->text('alamat');
 			$table->string('nomer_telepon');
-			$table->string('provinsi_code');
-			$table->string('kota_code');
-			$table->string('district_code');
-			$table->string('villages_code');
+			$table->string('provinsi_code')->nullable();
+			$table->string('kota_code')->nullable();
+			$table->string('district_code')->nullable();
+			$table->string('villages_code')->nullable();
 			$table->string('status_kelengkapan')->nullable();
 			$table->string('jalur_pendaftaran')->nullable();
-			$table->string('jurusan_id');
-			$table->string('jurusan_opsi_id');
+			$table->foreignId('jurusan_id')->nullable()->constrained('tbl_jurusan');
+			$table->foreignId('jurusan_opsi_id')->nullable()->constrained('tbl_jurusan');
 			$table->string('kelas');
 			$table->string('tahun_ajaran');
 			$table->string('nilai_rata');
