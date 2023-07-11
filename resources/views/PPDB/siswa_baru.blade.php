@@ -5,6 +5,30 @@
 @section('content')
     <div class="card">
         <div class="card-header border-0 pt-6">
+            Gambaran Hitungan Kelas Calon Peserta Didik Baru
+        </div>
+        <div class="card-body pt-0">
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_rancangan">
+                <thead>
+                    <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0 text-center">
+                        <th class="min-w-100px">Jurusan</th>
+                        <th class="min-w-100px">L(JML SISWA)</th>
+                        <th class="min-w-100px">P(JML SISWA)</th>
+                        <th class="min-w-100px">Total</th>
+                        <th class="min-w-100px">Jmlh Rombel</th>
+                        <th class="min-w-100px">L (JML /KLS )</th>
+                        <th class="min-w-100px">P (JML /KLS )</th>
+                        <th class="min-w-100px">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-bold">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header border-0 pt-6">
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                     <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
@@ -96,7 +120,8 @@
                                     <div class="text-center">
                                         <button type="reset" class="btn btn-light me-3"
                                             data-kt-users-modal-action="cancel">Discard</button>
-                                        <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                                        <button type="submit" class="btn btn-primary"
+                                            data-kt-users-modal-action="submit">
                                             <span class="indicator-label">Submit</span>
                                             <span class="indicator-progress">Please wait...
                                                 <span
@@ -117,8 +142,6 @@
             </div>
             <!--end::Card toolbar-->
         </div>
-        <!--end::Card header-->
-        <!--begin::Card body-->
         <div class="card-body pt-0">
             <!--begin::Table-->
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_users">
@@ -143,7 +166,6 @@
             </table>
             <!--end::Table-->
         </div>
-        <!--end::Card body-->
     </div>
 @endsection
 @push('js')
@@ -194,6 +216,73 @@
             table.draw();
         })
     </script>
+    <script>
+        var table_rancangan = $('#table_rancangan').DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: {
+                url: '{{ route('PPDB.siswabaru.ajax.rancangan') }}',
+                data: function(d) {
+                    d.name = $('.searching').val(),
+                        d.search = $('input[type="search"]').val()
+                }
+            },
+            columns: [{
+                    data: 'jurusan',
+                    name: 'jurusan',
+                    orderable: false,
+                    searchable: false,
+                    // className: "d-flex align-items-center",
+                },
+                {
+                    data: 'ljmlsiswa',
+                    name: 'ljmlsiswa',
+                    className: "text-center",
 
+                },
+
+                {
+                    data: 'pjmlsiswa',
+                    name: 'pjmlsiswa',
+                    className: "text-center",
+
+                },
+
+                {
+                    data: 'tjmlsiswa',
+                    name: 'tjmlsiswa',
+                    className: "text-center",
+
+                },
+
+                {
+                    data: 'total_rombel',
+                    name: 'total_rombel',
+                    className: "text-center",
+
+                },
+                {
+                    data: 'lperkelas',
+                    name: 'lperkelas',
+                    className: "text-center",
+
+                },
+                {
+                    data: 'pperkelas',
+                    name: 'pperkelas',
+                    className: "text-center",
+                },
+                {
+                    data: 'nama_jurusan',
+                    name: 'nama_jurusan',
+                    className: "text-center",
+
+                },
+
+            ]
+
+        });
+    </script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/table.js') }}"></script>
 @endpush

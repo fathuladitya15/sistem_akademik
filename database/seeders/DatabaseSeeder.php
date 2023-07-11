@@ -21,12 +21,6 @@ class DatabaseSeeder extends Seeder
 			SettingSeeder::class,
 			JurusanSeeder::class,
 		]);
-		User::factory(10)->has(DataSiswa::factory())->create();
-		
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+		User::factory(300)->has(DataSiswa::factory())->create();
     }
 }
