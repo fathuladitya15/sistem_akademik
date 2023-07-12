@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\DataSiswa;
+use App\Models\Pembayaran;
 
 // class User extends Authenticatable implements MustVerifyEmail
 class User extends Authenticatable 
@@ -51,5 +52,9 @@ class User extends Authenticatable
 	function DataSiswa()  
 	{
 		return $this->hasMany(DataSiswa::class,'user_id');	
+	}
+
+	function Pembayaran()  {
+		return $this->hasMany(Pembayaran::class,'user_id');
 	}
 }

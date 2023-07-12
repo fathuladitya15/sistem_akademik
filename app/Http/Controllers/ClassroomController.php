@@ -157,4 +157,11 @@ class ClassroomController extends Controller
 		
 	}
 
+	function kelas_per_jurusan($jurusan, $kelas)  {
+		$pageTitle = "Jurusan ".$jurusan." Kelas ".$kelas;
+		$SubPageTitle = "Management Kelas";
+
+		return view('kelas_jurusan.index',compact('pageTitle','SubPageTitle'));
+	}
+
 }

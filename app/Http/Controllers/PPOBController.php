@@ -217,8 +217,26 @@ class PPOBController extends Controller
 		$SubPageTitle = 'Data Siswa Tahun Ajaran '. tahun_ajaran('baru');
 
 		$total_jurusan = DB::table('table_data_siswa as td')->distinct()->select('td.jurusan_id','tj.nama_jurusan','tj.singkatan_jurusan')->join('tbl_jurusan as tj','tj.id','=','td.jurusan_id')->get();
-		// dd($total_jurusan);
 
+		$tes  = $data = DB::table('table_data_siswa as td')
+		->select('td.*','tj.nama_jurusan','tj.singkatan_jurusan','us.*')
+		->join('tbl_jurusan as tj','tj.id','=','td.jurusan_id')
+		->join('users as us' ,'us.id','=','td.user_id')
+		->where('tj.id',1)
+		->where('td.jenis_kelamin',"L")
+		->get();
+
+		$newdata = array();
+		$no = 1;
+		foreach ($tes as $key ) {
+			$newdata[] = array(
+				'no' =>  $no++,
+				'nama' => $key->name,
+				'jurusan' => $key->singkatan_jurusan,
+				'jenis_kelamin' => $key->jenis_kelamin,
+			);
+		}
+		// dd($newdata);
 		return view('PPDB.siswa_baru', compact('pageTitle','SubPageTitle','total_jurusan'));
 	}
 
@@ -320,9 +338,71 @@ class PPOBController extends Controller
 			return $r;
 			
 		})
-		->rawColumns(['name','ljmlsiswa','pjmlsiswa','tjmlsiswa','pperkelas','lperkelas']);
+		->addColumn('total_perkelas', function ($data)  {
+			$l 		= DataSiswa::where('jenis_kelamin','L')->where('jurusan_id',$data->jurusan_id)->count();
+			$p 		= DataSiswa::where('jenis_kelamin','P')->where('jurusan_id',$data->jurusan_id)->count();
+			$db 	= $p+$l;
+			$bagi 	= $db/36;
+
+			
+			if (fmod($bagi,1) !== 0) {
+				$rombel = round($bagi);
+			}else {
+				$rombel = $bagi ;
+			}
+
+
+			$set_p = $p/$rombel;
+			if (fmod($set_p, 1) !== 0.00) {
+				$r_p = (int)$set_p;
+			}else {
+				$r_p = $set_p;
+			}
+
+			$set_l = $l/$rombel;
+			if (fmod($set_l, 1) !== 0.00) {
+				$r_l = (int)$set_l;
+			}else {
+				$r_l = $set_l;
+			}
+
+			$result = $r_l + $r_p;
+
+			return $result;
+		})
+		->rawColumns(['name','ljmlsiswa','pjmlsiswa','tjmlsiswa','pperkelas','lperkelas','total_perkelas']);
 
 		return $table->make(true);
+	}
 
+	function ajax_data_siswa_absensi($jurusan = null, $rombel = null)  {
+		$data = DB::table('table_data_siswa as td')
+		->select('td.*','tj.nama_jurusan','tj.singkatan_jurusan','us.*')
+		->join('tbl_jurusan as tj','tj.id','=','td.jurusan_id')
+		->join('users as us' ,'us.id','=','td.user_id')
+		->get();
+		$table = Datatables::of($data,$rombel,$jurusan)
+		->addColumn('nama', function ($data) use ($rombel,$jurusan) {
+			$l 		= DataSiswa::where('jenis_kelamin','L')->where('jurusan_id',$data->jurusan_id)->count();
+			$p 		= DataSiswa::where('jenis_kelamin','P')->where('jurusan_id',$data->jurusan_id)->count();
+			$db 	= $p+$l;
+			$bagi 	= $db/36;
+			if (fmod($bagi,1) !== 0) {
+				$r = round($bagi);
+			}else {
+				$r = $bagi ;
+			}
+			return $data->name;
+		})
+		->addColumn('jurusan', function ($data) {
+			$jurusan = Jurusan::where('id',$data->jurusan_id)->first();
+
+			return $jurusan->singkatan_jurusan;
+		})
+		->addColumn('jenis_kelamin', function ($data){
+			return $data->jenis_kelamin;
+		})
+		->rawColumns(['nama','jurusan','jenis_kelamin']);
+		return $table->make(true);
 	}
 }

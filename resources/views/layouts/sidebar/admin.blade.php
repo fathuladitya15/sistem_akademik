@@ -93,10 +93,10 @@
 
             <div class="menu-item">
                 <div class="menu-content pt-8 pb-2">
-                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Crafted</span>
+                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Kesiswaan</span>
                 </div>
             </div>
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion  {{ menuShow(['kelas.data']) }}">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -119,67 +119,65 @@
                         </span>
                         <!--end::Svg Icon-->
                     </span>
-                    <span class="menu-title">Pages</span>
+                    <span class="menu-title">Belajar Mengajar</span>
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click"
+                        class="menu-item menu-accordion  {{ menuShow(['kelas.data']) }}">
                         <span class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Profile</span>
+                            <span class="menu-title">Jurusan</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
-                            <div class="menu-item">
-                                <a class="menu-link" href="../../demo8/dist/pages/profile/overview.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
+                            @php
+                                $jurusan = DB::table('tbl_jurusan')->get();
+                            @endphp
+                            @foreach ($jurusan as $item)
+                                <div data-kt-menu-trigger="click"
+                                    class="menu-item menu-accordion {{ Request::segment(2) == $item->singkatan_jurusan ? menuShow(['kelas.data']) : '' }} ">
+                                    <span class="menu-link">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">{{ $item->singkatan_jurusan }}</span>
+                                        <span class="menu-arrow"></span>
                                     </span>
-                                    <span class="menu-title">Overview</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link" href="../../demo8/dist/pages/profile/projects.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Projects</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link" href="../../demo8/dist/pages/profile/campaigns.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Campaigns</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link" href="../../demo8/dist/pages/profile/documents.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Documents</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link" href="../../demo8/dist/pages/profile/connections.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Connections</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link" href="../../demo8/dist/pages/profile/activity.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Activity</span>
-                                </a>
-                            </div>
+                                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                        <div class="menu-item">
+                                            <a class="menu-link {{ Request::segment(3) == '10' && Request::segment(2) == $item->singkatan_jurusan ? menuActive(['kelas.data']) : '' }}"
+                                                href="{{ route('kelas.data', [$item->singkatan_jurusan, '10']) }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Kelas 10</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link {{ Request::segment(3) == '11' && Request::segment(2) == $item->singkatan_jurusan ? menuActive(['kelas.data']) : '' }}"
+                                                href="{{ route('kelas.data', [$item->singkatan_jurusan, '11']) }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Kelas 11</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link {{ Request::segment(3) == '12' && Request::segment(2) == $item->singkatan_jurusan ? menuActive(['kelas.data']) : '' }}"
+                                                href="{{ route('kelas.data', [$item->singkatan_jurusan, '12']) }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Kelas 12</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
                         </div>
                     </div>
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">

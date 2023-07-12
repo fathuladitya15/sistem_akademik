@@ -49,6 +49,7 @@ Route::middleware('revalidate')->group(function (){
 		Route::get('/DataSiswaBaru',[PPOBController::class,'index_data_siswa'])->name('PPDB.siswabaru');
 		Route::get('/DataSiswaBaru/data',[PPOBController::class,'ajax_data_siswa'])->name('PPDB.siswabaru.ajax');
 		Route::get('/DataSiswaBaru/data1',[PPOBController::class,'ajax_data_siswa_rancangan'])->name('PPDB.siswabaru.ajax.rancangan');
+		Route::get('/DataSiswaBaru/data2/{jurusan}/{rombel}',[PPOBController::class,'ajax_data_siswa_absensi'])->name('PPDB.siswabaru.ajax.absensi');
 
 
 		Route::get('/ClassManagement',[ClassroomController::class,'index'])->name('class.index');
@@ -63,6 +64,8 @@ Route::middleware('revalidate')->group(function (){
 		Route::get('/jurusan/get/{id}',[ClassroomController::class,'jurusan_get_data'])->name('jurusan.get');
 		Route::delete('/jurusan/hapus/{id}',[ClassroomController::class,'jurusan_hapus'])->name('jurusan.delete');
 
+
+		Route::get('/kelas-management/{jurusan}/{kelas}',[ClassroomController::class,'kelas_per_jurusan'])->name('kelas.data');
 
 	});
 	Route::post('PPDB/post_data',[PPOBController::class,'proses_kirim_data'])->name('PPDB.kirim_data');

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\DataSiswa;
+use App\Models\Pembayaran;
 
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +22,6 @@ class DatabaseSeeder extends Seeder
 			SettingSeeder::class,
 			JurusanSeeder::class,
 		]);
-		User::factory(300)->has(DataSiswa::factory())->create();
+		User::factory(300)->has(DataSiswa::factory())->has(Pembayaran::factory())->create();
     }
 }

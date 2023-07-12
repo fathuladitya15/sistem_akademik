@@ -18,7 +18,7 @@
                         <th class="min-w-100px">Jmlh Rombel</th>
                         <th class="min-w-100px">L (JML /KLS )</th>
                         <th class="min-w-100px">P (JML /KLS )</th>
-                        <th class="min-w-100px">Total</th>
+                        <th class="min-w-100px">Total /KLS</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-bold">
@@ -27,6 +27,7 @@
             </table>
         </div>
     </div>
+    <br><br>
     <div class="card">
         <div class="card-header border-0 pt-6">
             <div class="card-toolbar">
@@ -40,8 +41,42 @@
                                     d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
                                     fill="black" />
                             </svg>
-                        </span>Set Kelas
+                        </span>Filter
                     </button>
+                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
+                        <div class="px-7 py-5">
+                            <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+                        </div>
+                        <div class="separator border-gray-200"></div>
+                        <div class="px-7 py-5" data-kt-user-table-filter="form">
+                            <div class="mb-10">
+                                <label class="form-label fs-6 fw-bold">Jurusan:</label>
+                                <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
+                                    data-placeholder="Select option" data-allow-clear="true"
+                                    data-kt-user-table-filter="role" data-hide-search="true">
+                                    <option></option>
+                                    @foreach ($total_jurusan as $item)
+                                        <option value="{{ $item->jurusan_id }}">{{ $item->singkatan_jurusan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-10">
+                                <label class="form-label fs-6 fw-bold">Two Step Verification:</label>
+                                <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
+                                    data-placeholder="Select option" data-allow-clear="true"
+                                    data-kt-user-table-filter="two-step" data-hide-search="true">
+                                    <option></option>
+                                    <option value="Enabled">Enabled</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="reset" class="btn btn-light btn-active-light-primary fw-bold me-2 px-6"
+                                    data-kt-menu-dismiss="true" data-kt-user-table-filter="reset">Reset</button>
+                                <button type="submit" class="btn btn-primary fw-bold px-6" data-kt-menu-dismiss="true"
+                                    data-kt-user-table-filter="filter">Apply</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
                     <div class="fw-bolder me-5">
@@ -68,8 +103,8 @@
                                             viewBox="0 0 24 24" fill="none">
                                             <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
                                                 rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                                            <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                                transform="rotate(45 7.41422 6)" fill="black" />
+                                            <rect x="7.41422" y="6" width="16" height="2"
+                                                rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                                         </svg>
                                     </span>
                                     <!--end::Svg Icon-->
@@ -143,6 +178,24 @@
             <!--end::Card toolbar-->
         </div>
         <div class="card-body pt-0">
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_absensi">
+                <thead>
+                    <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0 text-center">
+                        <th class="min-w-100px">Nama</th>
+                        <th class="min-w-100px">Jurusan</th>
+                        <th class="min-w-100px">Jenis Kelamin</th>
+                        <th class="min-w-100px">Rombel</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-bold">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br><br>
+    <div class="card">
+        <div class="card-body pt-0">
             <!--begin::Table-->
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_users">
                 <!--begin::Table head-->
@@ -182,6 +235,7 @@
                         d.search = $('input[type="search"]').val()
                 }
             },
+            pageLength: "36",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -274,8 +328,8 @@
                     className: "text-center",
                 },
                 {
-                    data: 'nama_jurusan',
-                    name: 'nama_jurusan',
+                    data: 'total_perkelas',
+                    name: 'total_perkelas',
                     className: "text-center",
 
                 },
@@ -283,6 +337,51 @@
             ]
 
         });
+    </script>
+    <script>
+        tabel_absensi = $('#table_absensi').DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            // dom: "Bfrltip",
+            ajax: {
+                url: '/DataSiswaBaru/data2/RPL/1',
+                data: function(d) {
+                    d.name = $('.searching').val(),
+                        d.search = $('input[type="search"]').val()
+                }
+            },
+            // pageLength: 36,
+            columns: [{
+                    data: 'nama',
+                    name: 'nama',
+                    orderable: false,
+                    searchable: false,
+                    // className: "d-flex align-items-center",
+                },
+                {
+                    data: 'jurusan',
+                    name: 'jurusan',
+                    className: "text-center",
+
+                },
+
+                {
+                    data: 'jenis_kelamin',
+                    name: 'jenis_kelamin',
+                    className: "text-center",
+
+                },
+
+                {
+                    data: 'singkatan_jurusan',
+                    name: 'singkatan_jurusan',
+                    className: "text-center",
+
+                },
+
+            ]
+        })
     </script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/table.js') }}"></script>
 @endpush
