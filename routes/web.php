@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\XenditController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\UserManagementController;
 
 
@@ -45,6 +46,7 @@ Route::middleware('revalidate')->group(function (){
 		Route::get('/PPDB/verifikasi_pembayaran/{id}',[PPOBController::class,'verifikasi_pembayaran'])->name('PPDB.verifikasi_pembayaran');
 		Route::get('/PPDB/verifikasi_pemberkasan/{id}',[PPOBController::class,'verifikasi_pemberkasan'])->name('PPDB.verifikasi_pemberkasan');
 		Route::get('/PPDB/get_kota',[PPOBController::class,'get_kota'])->name('PPDB.get_kota');
+		Route::get('/PPDB/payments-status',[PembayaranController::class,'index'])->name('PPDB.status_pembayaran');
 
 		Route::get('/DataSiswaBaru',[PPOBController::class,'index_data_siswa'])->name('PPDB.siswabaru');
 		Route::get('/DataSiswaBaru/data',[PPOBController::class,'ajax_data_siswa'])->name('PPDB.siswabaru.ajax');
@@ -73,6 +75,8 @@ Route::middleware('revalidate')->group(function (){
 	Route::get('/get_daerah/{id}',[PPOBController::class,'districts'])->name('get_daerah_by_code_kota');
 	Route::get('/get_desa/{id}',[PPOBController::class,'villages'])->name('get_desa_by_code_daerah');
 	Route::get('/cek_status_berkas/{id}',[PPOBController::class,'cek_berkas'])->name("PPDB.cek_berkas");
+
+	Route::post('/upload-bukti-pembayaran',[PPOBController::class,'upload_bukti_pembayaran'])->name('PPDB.Upload_bukti');
 });
 
 Route::get('/get_balance',[XenditController::class,'Balance'])->name('Xendit.Balance');

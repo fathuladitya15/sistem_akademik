@@ -566,7 +566,8 @@
                 </a>
             </div>
             <div class="menu-item">
-                <a class="menu-link  " href="" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                <a class="menu-link  {{ menuActive('PPDB.status_pembayaran') }}"
+                    href="{{ route('PPDB.status_pembayaran') }}" data-bs-toggle="tooltip" data-bs-trigger="hover"
                     data-bs-dismiss="click" data-bs-placement="right">
                     <span class="menu-icon">
                         <span class="svg-icon svg-icon-2">

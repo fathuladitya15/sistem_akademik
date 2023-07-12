@@ -18,6 +18,7 @@ return new class extends Migration
 			$table->string('nominal_pembayaran');
 			$table->string('status_pembayaran');
 			$table->string('detail_pembayaran');
+			$table->string('bukti_pembayaran')->nullable();
             $table->timestamps();
         });
     }

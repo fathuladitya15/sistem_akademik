@@ -39,9 +39,9 @@ class HomeController extends Controller
 			$datadiri			= DataSiswa::where('user_id',Auth::id())->count();
 			$pageTitle 			= 'Data Diri';
 			$SubPageTitle 		= 'Isi Lengakap Data Diri Anda';
-			$cek_berkas_s			= DataSiswa::where('user_id',Auth::id())->first();
-			$cek_berkas = $cek_berkas_s != null ? $cek_berkas_s->status_kelengkapan : "";
-			$jurusan = Jurusan::all();
+			$cek_berkas_s		= DataSiswa::where('user_id',Auth::id())->first();
+			$cek_berkas 		= $cek_berkas_s != null ? $cek_berkas_s->status_kelengkapan : "";
+			$jurusan 			= Jurusan::all();
 			return view("PPDB.datadiri", compact('datadiri','status_pembayaran','kota','pageTitle','SubPageTitle','desa','prov','daerah','cek_berkas','jurusan'));
 			
 		}

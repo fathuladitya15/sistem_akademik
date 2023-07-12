@@ -224,7 +224,21 @@
                         <h1>1740590797</h1>
                         <h3>A/n SMK TESTESTES</h3>
                     </div>
-
+                </div>
+                <div class="w-100">
+                    <form enctype="multipart/form-data" id="kirim_bukti_bayar">
+                        @csrf
+                        <label for=""> Bukti Pembayaran :</label>
+                        <input type="file" name="bukti_pembayaran" id="bukti_pembayaran" class="form-control">
+                        <div class="d-flex flex-stack pt-10">
+                            <button type="submit" id="kirim_bukti" class="btn btn-lg btn-primary" style="float:right">
+                                <span class="indicator-label">Kirim Bukti
+                                </span>
+                                <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         @endif
@@ -445,5 +459,69 @@
             })
 
         })
+    </script>
+    <script>
+        $('#kirim_bukti_bayar').submit(function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+
+            s = document.getElementById('kirim_bukti');
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('PPDB.Upload_bukti') }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    s.setAttribute("data-kt-indicator", "on")
+                    s.setAttribute('disable', true);
+                },
+                success: function(res) {
+                    s.removeAttribute("data-kt-indicator")
+                    s.setAttribute('disable', false);
+                    if (res.sukses == true) {
+                        Swal.fire({
+                            title: "Yeay ," + res.pesan + " .",
+                            icon: 'success',
+                            html: res.sub,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                        }).then((result) => {
+                            location.reload();
+                        })
+
+                    } else {
+                        Swal.fire({
+                            title: res.pesan,
+                            icon: 'success',
+                            html: res.sub,
+                            buttonsStyling: !1,
+                            confirmButtonText: "Ok, Paham!",
+                            customClass: {
+                                confirmButton: "btn btn-light"
+                            }
+                        })
+                    }
+                },
+                error: function(er) {
+                    s.removeAttribute("data-kt-indicator")
+                    s.setAttribute('disable', false);
+                    var pesan = er.responseJSON.message;
+                    Swal.fire({
+                        text: "Maaf ," + pesan + " .",
+                        icon: "error",
+                        buttonsStyling: !1,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-light"
+                        }
+                    })
+                }
+            });
+        });
     </script>
 @endpush

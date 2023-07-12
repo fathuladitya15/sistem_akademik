@@ -405,4 +405,33 @@ class PPOBController extends Controller
 		->rawColumns(['nama','jurusan','jenis_kelamin']);
 		return $table->make(true);
 	}
+
+	function upload_bukti_pembayaran(Request $request)  
+	{
+
+		$customMessages = [
+			'required' 	=> ":attribute tidak boleh kosong",
+			'image' 	=> ":attribute Harus berupa gambar",
+		];
+
+		$request->validate([
+			'bukti_pembayaran' =>  'required|image|mimes:jpeg,png,jpg|max:2048'
+		],$customMessages);
+
+		$cek = DB::table('pembayaran')->where('user_id',Auth::id())->first()->bukti_pembayaran;
+		if ($cek == "" && $cek == null) {
+			$imageName = time().'_'.Auth::id().'.'.$request->bukti_pembayaran->extension();
+			$path = 'assets/media/pembayaran/'.$imageName;
+			$update = DB::table('pembayaran')->where('user_id',Auth::id())->update(['bukti_pembayaran' => $path]);
+			if ($update) {
+				$save = $request->bukti_pembayaran->move(public_path('assets/media/pembayaran/'),$imageName);
+				$res = ['sukses' => TRUE , 'pesan' => "Bukti Pembayaran Anda Terkirim,"];
+			}else {
+				$res = ['sukses' => FALSE , 'pesan' => "Terjadi Kesalahan,"];
+			}
+		}else {
+			$res = ['sukses' => TRUE , 'pesan' => "Kami sedang melakukan pengecekan mohon tunggu ,"];
+		}
+		return response()->json($res);	
+	}
 }
