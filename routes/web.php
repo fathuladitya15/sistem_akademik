@@ -53,6 +53,8 @@ Route::middleware('revalidate')->group(function (){
 		Route::get('/DataSiswaBaru/data1',[PPOBController::class,'ajax_data_siswa_rancangan'])->name('PPDB.siswabaru.ajax.rancangan');
 		Route::get('/DataSiswaBaru/data2/{jurusan}/{rombel}',[PPOBController::class,'ajax_data_siswa_absensi'])->name('PPDB.siswabaru.ajax.absensi');
 
+		Route::get('/DataSiswaBaru/testing',[PPOBController::class,'tesforeach']);
+
 
 		Route::get('/ClassManagement',[ClassroomController::class,'index'])->name('class.index');
 		Route::get('/ClassManagement/data',[ClassroomController::class,'data_index'])->name('class.data');

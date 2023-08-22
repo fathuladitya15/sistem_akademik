@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Str;
 use Auth;
 use DataTables;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Jurusan;
+use App\Models\LogClass;
 use App\Models\DataSiswa;
 use App\Models\Pembayaran;
 
@@ -27,12 +29,32 @@ class PPOBController extends Controller
 		return view('PPDB.index', compact('pageTitle','SubPageTitle'));
 	}
 
-	function data_ppdb() 
+	function data_ppdb(Request $request) 
 	{
 		$data = User::where('role','siswa')->get();
 		
 		$table = Datatables::of($data)
 		->addIndexColumn()
+		->filter(function ($instance) use ($request) {
+			if (!empty($request->get('name'))) {
+				$instance->collection = $instance->collection->filter(function ($row) use ($request) {
+					return Str::contains($row['name'], $request->get('name')) ? true : false;
+				});
+			}
+	
+			if (!empty($request->get('search'))) {
+				$instance->collection = $instance->collection->filter(function ($row) use ($request) {
+					if (Str::contains(Str::lower($row['name']), Str::lower($request->get('search')))){
+						return true;
+					}else if (Str::contains(Str::lower($row['name']), Str::lower($request->get('search')))) {
+						return true;
+					}
+	
+					return false;
+				});
+			}
+	
+		})
 		->addColumn('created_at', function ($data){
 			return Carbon::parse($data->created_at)->format('l, d M Y');
 		})
@@ -40,14 +62,19 @@ class PPOBController extends Controller
 			$status = Pembayaran::where("user_id",$data->id)->first();
 			if ($status) {
 				if ($status->status_pembayaran == 0) {
-					$r = '<div class="badge badge-light-warning fw-bolder">Belum Bayar</div>';
+					if ($status->bukti_pembayaran == null) {
+						$r = '<div class="badge badge-light-warning fw-bolder">Belum Bayar</div>';
+					}else {
+						// $r = '<div class="badge badge-light-info fw-bolder">Sudah Transfer</div>';
+						$r = '<button class="btn btn-light btn-active-light-info btn-sm "  onclick="bukti()" data-image="'.$status->bukti_pembayaran.'" > Lihat Bukti  </button>';
+					}
 				}else if ($status->status_pembayaran == 1) {
 					$r = '<div class="badge badge-light-success fw-bolder">Sudah Bayar</div>';
 				}
 			}else {
 				$r = '<div class="badge badge-light-danger fw-bolder">Kadaluarsa</div>';
 			}
-			return $r;
+			return $r ;
 		})
 		->addColumn('status_berkas', function ($data)  {
 			$siswa = DataSiswa::where('user_id',$data->id)->first();
@@ -236,8 +263,10 @@ class PPOBController extends Controller
 				'jenis_kelamin' => $key->jenis_kelamin,
 			);
 		}
+
+		$jurusan = Jurusan::all();
 		// dd($newdata);
-		return view('PPDB.siswa_baru', compact('pageTitle','SubPageTitle','total_jurusan'));
+		return view('PPDB.siswa_baru', compact('pageTitle','SubPageTitle','total_jurusan','jurusan'));
 	}
 
 	function ajax_data_siswa()  
@@ -422,7 +451,7 @@ class PPOBController extends Controller
 		if ($cek == "" && $cek == null) {
 			$imageName = time().'_'.Auth::id().'.'.$request->bukti_pembayaran->extension();
 			$path = 'assets/media/pembayaran/'.$imageName;
-			$update = DB::table('pembayaran')->where('user_id',Auth::id())->update(['bukti_pembayaran' => $path]);
+			$update = DB::table('pembayaran')->where('user_id',Auth::id())->update(['bukti_pembayaran' => $path,'status_pembayaran' => 1]);
 			if ($update) {
 				$save = $request->bukti_pembayaran->move(public_path('assets/media/pembayaran/'),$imageName);
 				$res = ['sukses' => TRUE , 'pesan' => "Bukti Pembayaran Anda Terkirim,"];
@@ -433,5 +462,54 @@ class PPOBController extends Controller
 			$res = ['sukses' => TRUE , 'pesan' => "Kami sedang melakukan pengecekan mohon tunggu ,"];
 		}
 		return response()->json($res);	
+	}
+
+	function tesforeach()  {
+		$data = DB::table('table_data_siswa as td')->distinct()->select('td.jurusan_id','tj.nama_jurusan','tj.singkatan_jurusan')->join('tbl_jurusan as tj','tj.id','=','td.jurusan_id')->get();
+
+		$newf = [];
+
+		foreach ($data as $key ) {
+			// TOTAL SISWA BERDASARKAN JURUSAN
+			$l 		= DataSiswa::where('jenis_kelamin','L')->where('jurusan_id',$key->jurusan_id)->count(); 
+			$p 		= DataSiswa::where('jenis_kelamin','P')->where('jurusan_id',$key->jurusan_id)->count();
+
+			// PENJUMLAHAN TOTAL SISWA BERDASARKAN JURUSAN
+			$db 	= $p+$l;
+
+			// PROSES UNTUK MENENTUKAN JUMLAH KELAS YANG AKAN DIBUAT
+			// DALAM 1 KELAS ADALAH 36 SISWA , RUMUS MOD DIBUAT SENDIRI , TERDAPAT DI HELPERS.PHP
+			$TotalSiswaPerKelas = 36;
+
+			$rombel	 = mod($db,$TotalSiswaPerKelas,1);
+			$laki_r  = mod($l,$rombel,0);
+			$pere_r  = mod($p,$rombel,0);
+
+			$newf[] = [
+				'nama_jurusan' 				=> $key->nama_jurusan,
+				'Jumlah Siswa Laki- Laki' 	=> $l,
+				'Jumlah Siswa Perempuan' 	=> $p,
+				'Total Semua Siswa' 		=> $db,
+				'rombel' 					=> $rombel,
+				'Jumlah Siswa Laki Laki/kls'=> $laki_r,
+				'Jumlah Siswa Perempuan/kls'=> $pere_r,
+				'Total Siswa Per Kelas '    => $laki_r + $pere_r,
+				'Sisa Siswa Laki Laki'		=> $l - ($rombel*$laki_r),
+				'Sisa Siswa Perempuan'		=> $p - ($rombel*$pere_r),
+					
+			]; 
+
+			LogClass::create([
+				'jurusan_id' => $key->jurusan_id,
+				'JmlSiswaL' => $l,
+				'JmlSiswap' => $p,
+				'JmlKls' 	=> $rombel,
+				'JmlLKls'	=> $laki_r,
+				'JmPLKls'	=> $pere_r,
+				'JmlSiswaKls' => $laki_r + $pere_r,
+				'ThnAjaran' => tahun_ajaran('baru'),
+			]);
+		}
+		dd($newf);
 	}
 }

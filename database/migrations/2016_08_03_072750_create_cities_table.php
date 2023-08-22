@@ -23,8 +23,8 @@ class CreateCitiesTable extends Migration
 
             $table->foreign('province_code')
                 ->references('code')
-                ->on(config('laravolt.indonesia.table_prefix').'provinces')
-                ->onUpdate('cascade')->onDelete('restrict');
+                ->on(config('laravolt.indonesia.table_prefix').'provinces');
+                // ->onUpdate('cascade')->onDelete('rescrict');
         });
     }
 

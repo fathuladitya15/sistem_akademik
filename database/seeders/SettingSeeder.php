@@ -28,6 +28,8 @@ class SettingSeeder extends Seeder
 			array('name' => 'link_facebook','value' => 'https://facebook.com' ),
 			array('name' => 'link_instagram','value' => 'https://instagram.com' ),
 			array('name' => 'link_twitter','value' => 'https://twitter.com' ),
+			array('name' => 'longitude','value' => '-6.216226003212686' ),
+			array('name' => 'latitude','value' => '106.84520401581403'),
 		);
 		Setting::insert($arr);
     }

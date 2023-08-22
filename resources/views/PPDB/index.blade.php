@@ -406,6 +406,11 @@
                 }
             })
         }
+
+        function bukti() {
+            var path = $(this).getAttribute('data-image');
+            alert(path)
+        }
     </script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/table.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/export-users.js') }}"></script>

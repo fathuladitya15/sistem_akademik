@@ -32,6 +32,59 @@
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/table.js') }}"></script>
     <script>
-        var table = $('#table_pembayaran').dataTable();
+        var table = $('#table_pembayaran').dataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: {
+                url: '{{ route('PPDB.Ajax') }}',
+                data: function(d) {
+                    d.name = $('.searching').val(),
+                        d.search = $('input[type="search"]').val()
+                }
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false,
+                    // className: "d-flex align-items-center",
+                },
+                {
+                    data: 'name',
+                    name: 'name',
+                    // className: "d-flex align-items-center",
+                },
+
+                {
+                    data: 'status_siswa',
+                    name: 'status_siswa'
+                },
+
+                {
+                    data: 'status_pembayaran',
+                    name: 'status_pembayaran'
+                },
+
+                {
+                    data: 'status_berkas',
+                    name: 'status_berkas'
+                },
+
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+
+                {
+                    data: 'action',
+                    name: 'action',
+                    className: "text-end",
+                    orderable: false,
+                    searchable: false,
+                },
+
+            ]
+        });
     </script>
 @endpush

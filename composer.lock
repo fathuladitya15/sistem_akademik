@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4526e4091ff1bde24986c5a2db400c9d",
+    "content-hash": "97ad1a3daa88ca31d9dd1a6dcc2646a5",
     "packages": [
         {
             "name": "brick/math",
@@ -3406,6 +3406,48 @@
             "time": "2023-04-15T23:01:58+00:00"
         },
         {
+            "name": "robertogallea/laravel-python",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robertogallea/LaravelPython.git",
+                "reference": "292487bb4a35da0e635f83f66441c6c5fddf573e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robertogallea/LaravelPython/zipball/292487bb4a35da0e635f83f66441c6c5fddf573e",
+                "reference": "292487bb4a35da0e635f83f66441c6c5fddf573e",
+                "shasum": ""
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.7",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "robertogallea\\LaravelPython\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Python": "robertogallea\\LaravelPython\\Facades\\PythonFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "robertogallea\\LaravelPython\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Run python scripts inside Laravel app",
+            "support": {
+                "issues": "https://github.com/robertogallea/LaravelPython/issues",
+                "source": "https://github.com/robertogallea/LaravelPython/tree/0.1.1"
+            },
+            "time": "2020-12-15T15:30:22+00:00"
+        },
+        {
             "name": "symfony/console",
             "version": "v6.2.10",
             "source": {
@@ -6269,16 +6311,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v10.4.0",
+            "version": "v10.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "2e641c3a5d4414dc2b0fce89ab0c74d73fbf7eb3"
+                "reference": "7512f21e713f75e05721b61073d2411c5023da51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/2e641c3a5d4414dc2b0fce89ab0c74d73fbf7eb3",
-                "reference": "2e641c3a5d4414dc2b0fce89ab0c74d73fbf7eb3",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/7512f21e713f75e05721b61073d2411c5023da51",
+                "reference": "7512f21e713f75e05721b61073d2411c5023da51",
                 "shasum": ""
             },
             "require": {
@@ -6341,7 +6383,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables/issues",
-                "source": "https://github.com/yajra/laravel-datatables/tree/v10.4.0"
+                "source": "https://github.com/yajra/laravel-datatables/tree/v10.7.0"
             },
             "funding": [
                 {
@@ -6349,7 +6391,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-28T07:33:58+00:00"
+            "time": "2023-07-31T02:53:55+00:00"
         }
     ],
     "packages-dev": [

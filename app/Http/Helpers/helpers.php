@@ -80,4 +80,19 @@ if (!function_exists('tahun_ajaran')) {
 	}
 }
 
+if (!function_exists('mod')) {
+	function mod($nilai,$pembagi,$plus)  
+	{
+		$Pembagian = $nilai / $pembagi;
+		
+		if ($Pembagian == 0) {
+			$res  = $Pembagian;
+		}else {
+			$res = (int) $Pembagian + $plus;
+		}
+
+		return $res;
+	}
+}
+
 ?>

@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('tbl_log_class', function (Blueprint $table) {
             $table->id();
+			$table->string('jurusan_id');
+			$table->string('JmlSiswaL');
+			$table->string('JmlSiswaP');
+			$table->string('JmlKls');
+			$table->string('JmlLKls');
+			$table->string('JmPLKls');
+			$table->string('JmlSiswaKls');
+			$table->string('ThnAjaran');
             $table->timestamps();
         });
     }

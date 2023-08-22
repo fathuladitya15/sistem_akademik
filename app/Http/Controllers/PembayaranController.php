@@ -17,4 +17,8 @@ class PembayaranController extends Controller
 		$SubPageTitle = 'Pembayaran PPDB';
 		return view('pembayaran.ppdb', compact('pageTitle','SubPageTitle'));	
 	}
+
+	function ajax_index(Request $request) {
+		
+	}
 }

@@ -28,13 +28,12 @@ return new class extends Migration
 			$table->string('kelas');
 			$table->string('tahun_ajaran');
 			$table->string('nilai_rata');
+			$table->string('longitude')->nullable();
+			$table->string('latitude')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('table_data_siswa');
