@@ -74,7 +74,7 @@ if (!function_exists('tahun_ajaran')) {
 			$tanggal_lengkap_sekarang 	= Carbon::now()->format('d-m-Y');
 		}
 		
-		$tahun_ajaran 				= $tanggal_lengkap_sekarang >= $penentuan_ajaran_baru ? $tahun_sekarang.'/'.$tahun_besok : $tahun_kemarin.'/'.$tahun_sekarang;
+		$tahun_ajaran = $tanggal_lengkap_sekarang >= $penentuan_ajaran_baru ? $tahun_sekarang.'/'.$tahun_besok : $tahun_kemarin.'/'.$tahun_sekarang;
 
 		return $tahun_ajaran;
 	}

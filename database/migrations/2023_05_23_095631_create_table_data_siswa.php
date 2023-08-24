@@ -25,7 +25,7 @@ return new class extends Migration
 			$table->string('jalur_pendaftaran')->nullable();
 			$table->foreignId('jurusan_id')->nullable()->constrained('tbl_jurusan');
 			$table->foreignId('jurusan_opsi_id')->nullable()->constrained('tbl_jurusan');
-			$table->string('kelas');
+			$table->string('kelas_id')->nullable();
 			$table->string('tahun_ajaran');
 			$table->string('nilai_rata');
 			$table->string('longitude')->nullable();

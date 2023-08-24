@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PPOBController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\XenditController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\PengaturanController;
@@ -53,7 +54,7 @@ Route::middleware('revalidate')->group(function (){
 		Route::get('/DataSiswaBaru/data1',[PPOBController::class,'ajax_data_siswa_rancangan'])->name('PPDB.siswabaru.ajax.rancangan');
 		Route::get('/DataSiswaBaru/data2/{jurusan}/{rombel}',[PPOBController::class,'ajax_data_siswa_absensi'])->name('PPDB.siswabaru.ajax.absensi');
 
-		Route::get('/DataSiswaBaru/testing',[PPOBController::class,'tesforeach']);
+		// Route::get('/DataSiswaBaru/testing',[PPOBController::class,'tesforeach']);
 
 
 		Route::get('/ClassManagement',[ClassroomController::class,'index'])->name('class.index');
@@ -70,6 +71,8 @@ Route::middleware('revalidate')->group(function (){
 
 
 		Route::get('/kelas-management/{jurusan}/{kelas}',[ClassroomController::class,'kelas_per_jurusan'])->name('kelas.data');
+
+		Route::get('/Siswa/index',[SiswaController::class,'index'])->name('siswa.index');
 
 	});
 	Route::post('PPDB/post_data',[PPOBController::class,'proses_kirim_data'])->name('PPDB.kirim_data');

@@ -18,16 +18,15 @@ class DatasiswaFactory extends Factory
     public function definition(): array
     {
         return [
-            "nis" => $this->faker->randomDigit(),
-			"jenis_kelamin" => $this->faker->randomElement(["L","P"]),
-			"tanggal_lahir" => $this->faker->dateTime()->format("Y-m-d"),
-			"alamat" => $this->faker->address(),
-			"nomer_telepon" => $this->faker->phoneNumber(),
-			"jurusan_id" => Jurusan::all()->random()->id,
-			"jurusan_opsi_id" => Jurusan::all()->random()->id,
-			"kelas" => 1,
-			"tahun_ajaran" => tahun_ajaran('baru'),
-			"nilai_rata" => rand(10,99).'.'.rand(1,9)
+            "nis" 				=> $this->faker->randomDigit(),
+			"jenis_kelamin" 	=> $this->faker->randomElement(["L","P"]),
+			"tanggal_lahir" 	=> $this->faker->dateTime()->format("Y-m-d"),
+			"alamat" 			=> $this->faker->address(),
+			"nomer_telepon" 	=> $this->faker->phoneNumber(),
+			"jurusan_id" 		=> Jurusan::all()->random()->id,
+			"jurusan_opsi_id" 	=> Jurusan::all()->random()->id,
+			"tahun_ajaran" 		=> tahun_ajaran('baru'), // FAKER TAHUN AJARAN BISA DIGANTI MANUAL BERDASARKAN ANGKATAN
+			"nilai_rata" 		=> rand(10,99).'.'.rand(1,9)
 
         ];
     }
