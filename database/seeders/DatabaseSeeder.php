@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
     {
 
 		$this->call([
-			UsersTableSeeder::class,
+			// UsersTableSeeder::class,
 			SettingSeeder::class,
-			JurusanSeeder::class,
+			// JurusanSeeder::class,
 		]);
-		User::factory(300)->has(DataSiswa::factory())->has(Pembayaran::factory())->create();
+		// User::factory(300)->has(DataSiswa::factory())->has(Pembayaran::factory())->create();
     }
 }

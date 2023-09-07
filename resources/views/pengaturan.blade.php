@@ -169,6 +169,25 @@
                         <!--end::Col-->
                     </div>
                     <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label fw-bold fs-6">Status Registrasi</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8 fv-row">
+                            <label class="form-check form-switch form-check-custom form-check-solid pulse pulse-success"
+                                for="kt_user_menu_dark_mode_toggle">
+                                <input class="form-check-input w-30px h-20px" type="checkbox"
+                                    value="{{ $data->where('name', 'regis_pendaftaran') == '1' ? '1' : '0' }}"
+                                    checked="{{ $data->where('name', 'regis_pendaftaran') == '1' ? true : '' }}"
+                                    name="regis_pendaftaran" id="kt_user_menu_dark_mode_toggle">
+                                <span class="pulse-ring ms-n1"></span>
+                            </label>
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <!--end::Input group-->
                 </div>
                 <!--end::Card body-->
                 <!--begin::Actions-->

@@ -30,6 +30,7 @@ class SettingSeeder extends Seeder
 			array('name' => 'link_twitter','value' => 'https://twitter.com' ),
 			array('name' => 'longitude','value' => '-6.216226003212686' ),
 			array('name' => 'latitude','value' => '106.84520401581403'),
+			array('name' => 'regis_pendaftaran','value' => '1'),
 		);
 		Setting::insert($arr);
     }
